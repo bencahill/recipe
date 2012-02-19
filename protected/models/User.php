@@ -96,4 +96,13 @@ class User extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+	public function validatePassword($password)
+	{
+		return $this->hashPassword($password,$this->salt)===$this->password;
+	}
+
+	public function hashPassword($password,$salt)
+	{
+		return md5($salt.$password);
+	}
 }
