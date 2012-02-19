@@ -41,8 +41,8 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'servingUnit'); ?>
-		<?php echo $form->textArea($model,'servingUnit',array('rows'=>6, 'cols'=>50)); ?>
+		<?php echo $form->label($model,'serving_unit'); ?>
+		<?php echo $form->textArea($model,'serving_unit',array('rows'=>6, 'cols'=>50)); ?>
 	</div>
 
 	<div class="row">

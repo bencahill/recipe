@@ -11,7 +11,9 @@
  * @property string $notes
  * @property string $source
  * @property integer $servings
- * @property string $servingUnit
+ * @property string $serving_unit
+ * @property string $create_time
+ * @property string $update_time
  * @property integer $category_id
  * @property integer $author_id
  *
@@ -48,12 +50,12 @@ class Recipe extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('title, category_id, author_id', 'required'),
-			array('servings, category_id, author_id', 'numerical', 'integerOnly'=>true),
-			array('description, instructions, notes, source, servingUnit', 'safe'),
+			array('title, create_time, category_id, author_id', 'required'),
+			array('servings, create_time, update_time, category_id, author_id', 'numerical', 'integerOnly'=>true),
+			array('description, instructions, notes, source, serving_unit', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, title, description, instructions, notes, source, servings, servingUnit, category_id, author_id', 'safe', 'on'=>'search'),
+			array('id, title, description, instructions, notes, source, servings, serving_unit, category_id, author_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -84,7 +86,9 @@ class Recipe extends CActiveRecord
 			'notes' => 'Notes',
 			'source' => 'Source',
 			'servings' => 'Servings',
-			'servingUnit' => 'Serving Unit',
+			'serving_unit' => 'Serving Unit',
+			'create_time' => 'Create Time',
+			'update_time' => 'Update Time',
 			'category_id' => 'Category',
 			'author_id' => 'Author',
 		);
@@ -108,7 +112,7 @@ class Recipe extends CActiveRecord
 		$criteria->compare('notes',$this->notes,true);
 		$criteria->compare('source',$this->source,true);
 		$criteria->compare('servings',$this->servings);
-		$criteria->compare('servingUnit',$this->servingUnit,true);
+		$criteria->compare('serving_unit',$this->serving_unit,true);
 		$criteria->compare('category_id',$this->category_id);
 		$criteria->compare('author_id',$this->author_id);
 
@@ -122,5 +126,22 @@ class Recipe extends CActiveRecord
 		return array(
 			'condition'=>'author_id='.Yii::app()->user->id,         
 		);     
+	}
+
+	protected function beforeSave()
+	{
+		if(parent::beforeSave())
+		{
+			if($this->isNewRecord)
+			{
+				$this->create_time=$this->update_time=time();
+				$this->author_id=Yii::app()->user->id;
+			}
+			else
+				$this->update_time=time();
+			return true;
+		}
+		else
+			return false;
 	}
 }

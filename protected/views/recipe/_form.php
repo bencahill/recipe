@@ -46,21 +46,15 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'servingUnit'); ?>
-		<?php echo $form->textArea($model,'servingUnit',array('rows'=>6, 'cols'=>50)); ?>
-		<?php echo $form->error($model,'servingUnit'); ?>
+		<?php echo $form->labelEx($model,'serving_unit'); ?>
+		<?php echo $form->textArea($model,'serving_unit',array('rows'=>6, 'cols'=>50)); ?>
+		<?php echo $form->error($model,'serving_unit'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'category_id'); ?>
 		<?php echo $form->textField($model,'category_id'); ?>
 		<?php echo $form->error($model,'category_id'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'author_id'); ?>
-		<?php echo $form->textField($model,'author_id'); ?>
-		<?php echo $form->error($model,'author_id'); ?>
 	</div>
 
 	<div class="row buttons">

@@ -50,7 +50,9 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'source',
 		/*
 		'servings',
-		'servingUnit',
+		'serving_unit',
+		'create_time',
+		'update_time',
 		'category_id',
 		'author_id',
 		*/

@@ -25,7 +25,7 @@ $this->menu=array(
 		'notes',
 		'source',
 		'servings',
-		'servingUnit',
+		'serving_unit',
 		'category_id',
 		'author_id',
 	),

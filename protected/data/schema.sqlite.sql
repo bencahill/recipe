@@ -14,7 +14,9 @@ CREATE TABLE tbl_recipe (
   notes TEXT,
   source TEXT,
   servings INTEGER,
-  servingUnit TEXT,
+  serving_unit TEXT,
+  create_time INTEGER NOT NULL,
+  update_time INTEGER,
   category_id INTEGER NOT NULL,
   author_id INTEGER NOT NULL,
   CONSTRAINT FK_recipe_author FOREIGN KEY (author_id)

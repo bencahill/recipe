@@ -29,8 +29,8 @@
 	<br />
 
 	<?php /*
-	<b><?php echo CHtml::encode($data->getAttributeLabel('servingUnit')); ?>:</b>
-	<?php echo CHtml::encode($data->servingUnit); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('serving_unit')); ?>:</b>
+	<?php echo CHtml::encode($data->serving_unit); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('category_id')); ?>:</b>
