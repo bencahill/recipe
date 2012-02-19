@@ -116,4 +116,11 @@ class Recipe extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+	public function defaultScope()
+	{         
+		return array(
+			'condition'=>'author_id='.Yii::app()->user->id,         
+		);     
+	}
 }
