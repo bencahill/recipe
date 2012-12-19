@@ -1,0 +1,4 @@
+*.swp
+assets/*
+protected/runtime/*
+protected/data/*.db
