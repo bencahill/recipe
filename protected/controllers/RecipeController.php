@@ -61,20 +61,40 @@ class RecipeController extends Controller
 	 */
 	public function actionCreate()
 	{
+		Yii::import('ext.multimodelform.MultiModelForm');
+
 		$model=new Recipe;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
+		$ingredient = new Ingredient;
+		$validatedIngredients = array(); //ensure an empty array
+
 		if(isset($_POST['Recipe']))
 		{
 			$model->attributes=$_POST['Recipe'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+
+			//build a 'dummy' $masterValues for validation only so that recipe_id is not blank
+			$masterValues = array('recipe_id' => 1);
+
+			if( //validate detail before saving the master
+			MultiModelForm::validate($ingredient,$validatedIngredients,$deleteItems,$masterValues) &&
+			$model->save()
+			)
+			{
+				//the value for the foreign key 'recipe_id'
+				$masterValues = array ('recipe_id'=>$model->id);
+				if (MultiModelForm::save($ingredient,$validatedIngredients,$deleteIngredients,$masterValues))
+					$this->redirect(array('view','id'=>$model->id));
+			}
 		}
 
 		$this->render('create',array(
 			'model'=>$model,
+			//submit the ingredient and validatedItems to the widget in the edit form
+			'ingredient'=>$ingredient,
+			'validatedIngredients' => $validatedIngredients,
 		));
 	}
 
@@ -85,20 +105,34 @@ class RecipeController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
+		Yii::import('ext.multimodelform.MultiModelForm');
+
 		$model=$this->loadModel($id);
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
+		$ingredient = new Ingredient;
+		$validatedIngredients = array(); //ensure an empty array
+
 		if(isset($_POST['Recipe']))
 		{
 			$model->attributes=$_POST['Recipe'];
-			if($model->save())
+			//the value for the foreign key 'recipe_id'
+			$masterValues = array ('recipe_id'=>$model->id);
+
+			if( //Save the master model after saving valid ingredients
+			MultiModelForm::save($ingredient,$validatedIngredients,$deleteIngredients,$masterValues) &&
+			$model->save()
+			)
 				$this->redirect(array('view','id'=>$model->id));
 		}
 
 		$this->render('update',array(
 			'model'=>$model,
+			//submit the ingredient and validatedItems to the widget in the edit form
+			'ingredient'=>$ingredient,
+			'validatedIngredients' => $validatedIngredients,
 		));
 	}
 

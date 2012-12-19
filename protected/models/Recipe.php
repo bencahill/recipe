@@ -50,7 +50,8 @@ class Recipe extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('title, create_time, category_id, author_id', 'required'),
+			array('title, category_id', 'required'),
+			// array('title, create_time, category_id, author_id', 'required'),
 			array('servings, create_time, update_time, category_id, author_id', 'numerical', 'integerOnly'=>true),
 			array('description, instructions, notes, source, serving_unit', 'safe'),
 			// The following rule is used by search().

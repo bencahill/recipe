@@ -1,0 +1,34 @@
+<div class="view">
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('quantity')); ?>:</b>
+	<?php echo CHtml::encode($data->quantity); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('measurement')); ?>:</b>
+	<?php echo CHtml::encode($data->measurement); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('ingredient')); ?>:</b>
+	<?php echo CHtml::encode($data->ingredient); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('notes')); ?>:</b>
+	<?php echo CHtml::encode($data->notes); ?>
+	<br />
+
+	<?php /*
+	<b><?php echo CHtml::encode($data->getAttributeLabel('serving_unit')); ?>:</b>
+	<?php echo CHtml::encode($data->serving_unit); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('category_id')); ?>:</b>
+	<?php echo CHtml::encode($data->category_id); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('author_id')); ?>:</b>
+	<?php echo CHtml::encode($data->author_id); ?>
+	<br />
+
+	*/ ?>
+
+</div>

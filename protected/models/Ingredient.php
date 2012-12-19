@@ -9,6 +9,7 @@
  * @property string $measurement
  * @property string $ingredient
  * @property string $notes
+ * @property integer $position
  * @property integer $recipe_id
  *
  * The followings are the available model relations:

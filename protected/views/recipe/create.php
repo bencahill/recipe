@@ -12,4 +12,5 @@ $this->menu=array(
 
 <h1>Create Recipe</h1>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php echo $this->renderPartial('_form', array('model'=>$model,
+								'ingredient'=>$ingredient,'validatedIngredients'=>$validatedIngredients)); ?>

@@ -13,13 +13,36 @@ $this->menu=array(
 );
 ?>
 
-<h1>View Recipe #<?php echo $model->id; ?></h1>
+<h1><?php echo $model->title; ?></h1>
 
-<?php $this->widget('zii.widgets.CDetailView', array(
+<?php
+$this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
 		'id',
-		'title',
+	),
+));
+
+$dataProvider = new CArrayDataProvider($model->ingredients, array(
+	'sort'=>array(
+		'defaultOrder'=>'position ASC',
+	),
+));
+
+$this->widget('zii.widgets.grid.CGridView', array(
+	'dataProvider'=>$dataProvider,
+	'summaryText'=>'',
+	'columns'=>array(
+		'quantity',
+		'measurement',
+		'ingredient',
+		'notes',
+	),
+));
+
+$this->widget('zii.widgets.CDetailView', array(
+	'data'=>$model,
+	'attributes'=>array(
 		'description',
 		'instructions',
 		'notes',
@@ -27,6 +50,6 @@ $this->menu=array(
 		'servings',
 		'serving_unit',
 		'category_id',
-		'author_id',
 	),
-)); ?>
+));
+?>

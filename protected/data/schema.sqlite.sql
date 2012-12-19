@@ -31,6 +31,7 @@ CREATE TABLE tbl_ingredient (
   measurement TEXT NOT NULL,
   ingredient TEXT NOT NULL,
   notes TEXT,
+  position INTEGER,
   recipe_id INTEGER NOT NULL,
   CONSTRAINT FK_ingredient_recipe FOREIGN KEY (recipe_id)
     REFERENCES tbl_recipe (id) ON DELETE CASCADE ON UPDATE RESTRICT
