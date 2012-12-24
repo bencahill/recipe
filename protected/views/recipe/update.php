@@ -18,27 +18,29 @@ $sectionCount = 0;
 foreach( $model->sections as $section ):
 	$sectionCount++;
 ?>
-<div class="view id_section_copy" style="display:none;">
-	<div class="row">
-		<label for="Recipe_section_<?php echo $sectionCount; ?>_">
-		Instructions
-		</label>
-		<textarea name="Recipe[sections][]" id="Recipe_section_<?php echo $sectionCount; ?>_"><?php echo $section; ?></textarea>
-	</div>
-</div>
+<table style="display:none;">
+	<tr class="mmf_row section">
+		<td class="mmf_cell">
+			<label for="Recipe_section_<?php echo $sectionCount; ?>_">
+			Instructions
+			</label>
+			<textarea name="Recipe[sections][]" id="Recipe_section_<?php echo $sectionCount; ?>_"><?php echo $section; ?></textarea>
+		</td>
+	</tr>
+</table>
 <?php
 endforeach;
 ?>
 
 <script type="text/javascript">
 $(function() {
-	$sections = $('.id_section_copy');
+	$sections = $('.section');
 	for( i = 0; i < $sections.length; i++ ) {
-		$lastIng = $('.view').not('.id_section_copy').find('[id*=section]').filter('[value='+i+']').last().parent();
-		$('.id_section_copy').not('#mmf_sortable .id_section_copy').first().insertAfter($lastIng);
+		$lastIng = $('.mmf_row').not('.section').find('[id*=section]').filter('[value='+i+']').last().parent();
+		$('.section').not('#mmf_sortable .section').first().insertAfter($lastIng);
 	}
-	$('.id_section_copy').last().appendTo($('#mmf_sortable'));
-	addRemoveLink( $('.id_section_copy').filter(':not(:last)') );
+	$('.section').last().appendTo($('#mmf_sortable'));
+	addRemoveLink( $('.section').filter(':not(:last)') );
 });
 </script>
 

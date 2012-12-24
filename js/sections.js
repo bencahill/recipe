@@ -1,16 +1,18 @@
 // Re-calculates section id's for sections and ingredients
 function sectionCalc() {
 	sectionId = 0;
-	$("#mmf_sortable .view").each(function() {
+	positionId = 1;
+	$("#mmf_sortable .mmf_row").each(function() {
 		$this = $(this);
-		if( $this.hasClass("id_section_copy") ) {
-			// $this.find("[id^=Recipe_section]").val(sectionId);
+		if( $this.hasClass("section") ) {
 			sectionId++;
 		} else {
 			$this.find("[id^=Ingredient]").filter("[id*=section]").val(sectionId);
+			$this.find("[id^=Ingredient]").filter("[id*=position]").val(positionId);
+			positionId++;
 		}
 	});
-	$("#mmf_sortable .view:not(.id_section_copy)").last().find("[id^=Ingredient]").filter("[id*=section]").val('');
+	$("#mmf_sortable .mmf_row:not(.section)").last().find("[id^=Ingredient]").filter("[id*=section]").val('');
 }
 
 function addRemoveLink( target ) {

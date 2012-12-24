@@ -145,7 +145,7 @@ class MultiModelForm extends CWidget
         'placeholder' => 'ui-state-highlight',
         'opacity' => 0.8,
         'cursor' => 'move',
-		'items' => '.view:not(:last)',
+		'items' => '.mmf_row:not(:last)',
 		'stop' => 'js:function( event, ui) {
 			sectionCalc();
 		}'
@@ -307,8 +307,8 @@ class MultiModelForm extends CWidget
         if (!isset($formData))
             $formData = $_POST;
 
-        $sortAttribute = !empty($formData[self::CLASSPREFIX . 'sortAttribute']) ? $formData[self::CLASSPREFIX . 'sortAttribute'] : null;
-        $sortIndex = 0;
+        // $sortAttribute = !empty($formData[self::CLASSPREFIX . 'sortAttribute']) ? $formData[self::CLASSPREFIX . 'sortAttribute'] : null;
+        // $sortIndex = 0;
 
         if ($doValidate)
         {
@@ -327,11 +327,11 @@ class MultiModelForm extends CWidget
                 }
 
                 //if sortable, assign the sortAttribute
-                if (!empty($sortAttribute))
-                {
-                    $sortIndex++;
-                    $item->$sortAttribute = $sortIndex;
-                }
+                // if (!empty($sortAttribute))
+                // {
+                    // $sortIndex++;
+                    // $item->$sortAttribute = $sortIndex;
+                // }
 
                 if (!$item->save())
                     return false;
@@ -635,7 +635,7 @@ class MultiModelForm extends CWidget
      */
     public function isSortable()
     {
-        return !empty($this->sortAttribute) && !$this->tableView;
+        return !empty($this->sortAttribute); // && !$this->tableView;
     }
 
     /**

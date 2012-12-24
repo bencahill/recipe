@@ -57,6 +57,7 @@ $this->widget('ext.multimodelform.MultiModelForm',array(
         'formConfig' => $ingredientFormConfig, //the form configuration array
 		'model' => $ingredient, //instance of the form model
 		'sortAttribute' => 'position', //if assigned: sortable fieldsets is enabled
+		'tableView' => true,
  
         //if submitted not empty from the controller,
         //the form will be rendered with validation errors
@@ -69,13 +70,12 @@ $this->widget('ext.multimodelform.MultiModelForm',array(
 
 <script type="text/javascript">
 $(function() {
-	$('.id_section_copy').show();
 	$('#id_section').relCopy();
 	sectionCalc();
 });
 </script>
 
-<a id="id_section" href="#" rel=".id_section_copy">Add section</a>
+<a id="id_section" href="#" rel=".section">Add section</a>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'notes'); ?>

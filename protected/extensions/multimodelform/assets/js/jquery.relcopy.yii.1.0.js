@@ -116,11 +116,11 @@
 					});
 				};
 
-				if ( $(clone).hasClass('id_ingredient_copy') ) {
-					$(parent).find(rel+':last').before(clone);
+				if ( $(clone).hasClass('section') ) {
+					$(parent).find('.mmf_row:last').before(clone);
+					addRemoveLink( $(parent).find('.section').get(-2) );
 				} else {
-					$(parent).find('.view:last').before(clone);
-					addRemoveLink( $(parent).find('.id_section_copy').get(-2) );
+					$(parent).find(rel+':last').before(clone);
 				}
 				sectionCalc();
 				return false;
