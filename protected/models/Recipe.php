@@ -7,13 +7,13 @@
  * @property integer $id
  * @property string $title
  * @property string $description
- * @property string $instructions
  * @property string $notes
  * @property string $source
  * @property integer $servings
  * @property string $serving_unit
  * @property string $create_time
  * @property string $update_time
+ * @property integer $sections
  * @property integer $category_id
  * @property integer $author_id
  *
@@ -50,13 +50,13 @@ class Recipe extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('title, category_id', 'required'),
+			array('title, sections, category_id', 'required'),
 			// array('title, create_time, category_id, author_id', 'required'),
 			array('servings, create_time, update_time, category_id, author_id', 'numerical', 'integerOnly'=>true),
-			array('description, instructions, notes, source, serving_unit', 'safe'),
+			array('description, notes, source, serving_unit, sections', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, title, description, instructions, notes, source, servings, serving_unit, category_id, author_id', 'safe', 'on'=>'search'),
+			array('id, title, description, notes, source, servings, serving_unit, category_id, author_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -74,6 +74,16 @@ class Recipe extends CActiveRecord
 		);
 	}
 
+	public function behaviors()
+	{
+		return array(
+			'CSerializeBehavior' => array(
+				'class' => 'application.behaviors.CSerializeBehavior',
+				'serialAttributes' => array('sections'), // name of attribute(s)
+			)
+		);
+	}
+
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */
@@ -83,13 +93,13 @@ class Recipe extends CActiveRecord
 			'id' => 'ID',
 			'title' => 'Title',
 			'description' => 'Description',
-			'instructions' => 'Instructions',
 			'notes' => 'Notes',
 			'source' => 'Source',
 			'servings' => 'Servings',
 			'serving_unit' => 'Serving Unit',
 			'create_time' => 'Create Time',
 			'update_time' => 'Update Time',
+			'sections' => 'Sections',
 			'category_id' => 'Category',
 			'author_id' => 'Author',
 		);
@@ -109,7 +119,6 @@ class Recipe extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('title',$this->title,true);
 		$criteria->compare('description',$this->description,true);
-		$criteria->compare('instructions',$this->instructions,true);
 		$criteria->compare('notes',$this->notes,true);
 		$criteria->compare('source',$this->source,true);
 		$criteria->compare('servings',$this->servings);

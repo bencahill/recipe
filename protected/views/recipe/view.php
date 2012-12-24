@@ -36,7 +36,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		'quantity',
 		'measurement',
 		'ingredient',
-		'notes',
+		'section_id',
 	),
 ));
 
@@ -44,7 +44,6 @@ $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
 		'description',
-		'instructions',
 		'notes',
 		'source',
 		'servings',

@@ -21,11 +21,6 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'instructions'); ?>
-		<?php echo $form->textArea($model,'instructions',array('rows'=>6, 'cols'=>50)); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->label($model,'notes'); ?>
 		<?php echo $form->textArea($model,'notes',array('rows'=>6, 'cols'=>50)); ?>
 	</div>

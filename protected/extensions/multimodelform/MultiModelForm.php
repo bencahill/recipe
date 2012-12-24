@@ -144,7 +144,12 @@ class MultiModelForm extends CWidget
     public $sortOptions = array(
         'placeholder' => 'ui-state-highlight',
         'opacity' => 0.8,
-        'cursor' => 'move'
+        'cursor' => 'move',
+		'items' => '.view:not(:last)',
+		'stop' => 'js:function( event, ui) {
+			sectionCalc();
+		}'
+
     );
 
     /**

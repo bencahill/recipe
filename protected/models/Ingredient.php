@@ -8,9 +8,9 @@
  * @property string $quantity
  * @property string $measurement
  * @property string $ingredient
- * @property string $notes
  * @property integer $position
  * @property integer $recipe_id
+ * @property integer $section_id
  *
  * The followings are the available model relations:
  * @property Recipe $recipe
@@ -43,12 +43,12 @@ class Ingredient extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('quantity, measurement, ingredient, recipe_id', 'required'),
-			array('recipe_id', 'numerical', 'integerOnly'=>true),
-			array('notes', 'safe'),
+			array('quantity, measurement, ingredient, recipe_id, section_id', 'required'),
+			array('recipe_id, section_id', 'numerical', 'integerOnly'=>true),
+			array('section_id', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, quantity, measurement, ingredient, notes, recipe_id', 'safe', 'on'=>'search'),
+			array('id, quantity, measurement, ingredient, recipe_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -74,8 +74,8 @@ class Ingredient extends CActiveRecord
 			'quantity' => 'Quantity',
 			'measurement' => 'Measurement',
 			'ingredient' => 'Ingredient',
-			'notes' => 'Notes',
 			'recipe_id' => 'Recipe',
+			'section_id' => 'Section',
 		);
 	}
 
@@ -94,7 +94,6 @@ class Ingredient extends CActiveRecord
 		$criteria->compare('quantity',$this->quantity,true);
 		$criteria->compare('measurement',$this->measurement,true);
 		$criteria->compare('ingredient',$this->ingredient,true);
-		$criteria->compare('notes',$this->notes,true);
 		$criteria->compare('recipe_id',$this->recipe_id);
 
 		return new CActiveDataProvider($this, array(

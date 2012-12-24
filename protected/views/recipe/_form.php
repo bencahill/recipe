@@ -1,5 +1,9 @@
 <div class="form">
 
+<?php Yii::app()->clientScript->registerScriptFile(
+    Yii::app()->baseUrl.'/js/sections.js'
+); ?>
+
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'recipe-form',
 	'enableAjaxValidation'=>false,
@@ -43,11 +47,11 @@ $ingredientFormConfig = array(
         'ingredient'=>array(
             'type'=>'textarea',
         ),
-        'notes'=>array(
-            'type'=>'textarea',
+        'section_id'=>array(
+            'type'=>'hidden',
         ),
     ));
- 
+
 $this->widget('ext.multimodelform.MultiModelForm',array(
         'id' => 'id_ingredient', //the unique widget id
         'formConfig' => $ingredientFormConfig, //the form configuration array
@@ -63,11 +67,15 @@ $this->widget('ext.multimodelform.MultiModelForm',array(
     ));
 ?>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'instructions'); ?>
-		<?php echo $form->textArea($model,'instructions',array('rows'=>6, 'cols'=>50)); ?>
-		<?php echo $form->error($model,'instructions'); ?>
-	</div>
+<script type="text/javascript">
+$(function() {
+	$('.id_section_copy').show();
+	$('#id_section').relCopy();
+	sectionCalc();
+});
+</script>
+
+<a id="id_section" href="#" rel=".id_section_copy">Add section</a>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'notes'); ?>

@@ -12,10 +12,6 @@
 	<?php echo CHtml::encode($data->description); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('instructions')); ?>:</b>
-	<?php echo CHtml::encode($data->instructions); ?>
-	<br />
-
 	<b><?php echo CHtml::encode($data->getAttributeLabel('notes')); ?>:</b>
 	<?php echo CHtml::encode($data->notes); ?>
 	<br />

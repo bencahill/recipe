@@ -62,7 +62,7 @@
 				var funcBeforeNewId = function(){eval(settings.beforeNewId);};
 				var funcAfterNewId = function(){eval(settings.afterNewId);};
 
-				var master = $(rel+":first");
+				var master = $(rel+":last");
 				funcBeforeClone.call(master);
 
 				var parent = $(master).parent();
@@ -116,7 +116,13 @@
 					});
 				};
 
-				$(parent).find(rel+':last').after(clone);
+				if ( $(clone).hasClass('id_ingredient_copy') ) {
+					$(parent).find(rel+':last').before(clone);
+				} else {
+					$(parent).find('.view:last').before(clone);
+					addRemoveLink( $(parent).find('.id_section_copy').get(-2) );
+				}
+				sectionCalc();
 				return false;
 
 			}); // end click action

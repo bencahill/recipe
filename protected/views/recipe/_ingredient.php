@@ -12,8 +12,8 @@
 	<?php echo CHtml::encode($data->ingredient); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('notes')); ?>:</b>
-	<?php echo CHtml::encode($data->notes); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('section_id')); ?>:</b>
+	<?php echo CHtml::encode($data->section_id); ?>
 	<br />
 
 	<?php /*
