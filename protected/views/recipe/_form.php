@@ -24,7 +24,7 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'yield'); ?>
-		<?php echo $form->textField($model,'yield'); ?>
+		<?php echo $form->textArea($model,'yield',array('rows'=>2, 'cols'=>20)); ?>
 		<?php echo $form->error($model,'yield'); ?>
 	</div>
 
