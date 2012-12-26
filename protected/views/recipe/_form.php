@@ -23,6 +23,12 @@
 	</div>
 
 	<div class="row">
+		<?php echo $form->labelEx($model,'yield'); ?>
+		<?php echo $form->textField($model,'yield'); ?>
+		<?php echo $form->error($model,'yield'); ?>
+	</div>
+
+	<div class="row">
 		<?php echo $form->labelEx($model,'description'); ?>
 		<?php echo $form->textArea($model,'description',array('rows'=>6, 'cols'=>50)); ?>
 		<?php echo $form->error($model,'description'); ?>
@@ -102,12 +108,6 @@ $(function() {
 		<?php echo $form->labelEx($model,'source'); ?>
 		<?php echo $form->textField($model,'source'); ?>
 		<?php echo $form->error($model,'source'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'yield'); ?>
-		<?php echo $form->textField($model,'yield'); ?>
-		<?php echo $form->error($model,'yield'); ?>
 	</div>
 
 	<div class="row">

@@ -19,6 +19,7 @@ $this->menu=array(
 $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
+		'yield',
 		'id',
 	),
 ));
@@ -46,7 +47,6 @@ $this->widget('zii.widgets.CDetailView', array(
 		'description',
 		'notes',
 		'source',
-		'yield',
 		'category_id',
 	),
 ));
