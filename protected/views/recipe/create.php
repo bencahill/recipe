@@ -16,7 +16,20 @@ $this->menu=array(
 			<label for="Recipe_section">
 			Instructions
 			</label>
-			<textarea rows="8" cols="80" name="Recipe[sections][]" id="Recipe_section"></textarea>
+<?php
+			$this->widget('ext.editMe.widgets.ExtEditMe', array(
+				'name'=>'Recipe[sections][]',
+				'htmlOptions'=>array(
+					'rows'=>8,
+					'cols'=>80,
+					'id'=>'Recipe_section',
+				),
+				'toolbar'=>array(
+					array( 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ),
+					array( 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Scayt' ),
+				),
+			));
+?>
 		</td>
 		<td class="mmf_cell"></td>
 	</tr>

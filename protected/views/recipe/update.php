@@ -24,7 +24,21 @@ foreach( $model->sections as $section ):
 			<label for="Recipe_section_<?php echo $sectionCount; ?>_">
 			Instructions
 			</label>
-			<textarea rows="8" cols="80" name="Recipe[sections][]" id="Recipe_section_<?php echo $sectionCount; ?>_"><?php echo $section; ?></textarea>
+<?php
+			$this->widget('ext.editMe.widgets.ExtEditMe', array(
+				'name'=>'Recipe[sections][]',
+				'htmlOptions'=>array(
+					'rows'=>8,
+					'cols'=>80,
+					'id'=>'Recipe_section_'.$sectionCount.'_',
+				),
+				'value'=>$section,
+				'toolbar'=>array(
+					array( 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ),
+					array( 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Scayt' ),
+				),
+			));
+?>
 		</td>
 		<td class="mmf_cell"></td>
 	</tr>

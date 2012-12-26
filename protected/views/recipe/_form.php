@@ -73,7 +73,13 @@ $this->widget('ext.multimodelform.MultiModelForm',array(
 
 <script type="text/javascript">
 $(function() {
-	$('#id_section').relCopy();
+	$('#id_section').click(function() {
+		var id = ($('.section').length + 1);
+		$('.mmf_row:not(.section)').last().before('<tr class="mmf_row section"> <td class="mmf_cell" colspan="2"> <label for="Recipe_section'+id+'"> Instructions </label> <textarea name="Recipe[sections][]" id="Recipe_section'+id+'"></textarea> </td> <td class="mmf_cell"></td> </tr>');
+		$('#Recipe_section'+id).ckeditor({'toolbar':[['Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat'],['NumberedList','BulletedList','-','Outdent','Indent','-','Scayt']],'forcePasteAsPlainText':true,'extraPlugins':'','removeDialogTabs':'','contentsCss':['/assets/e07a29c9/contents.css'],'resize_enabled':true,'resize_dir':'both','autoGrow_onStartup':false,'language':'','baseHref':'','bodyClass':'','bodyId':'','docType':'','filebrowserBrowseUrl':'','filebrowserFlashBrowseUrl':'','filebrowserImageBrowseUrl':'','filebrowserFlashUploadUrl':'','filebrowserUploadUrl':'','filebrowserImageBrowseLinkUrl':'','filebrowserImageUploadUrl':'','fullPage':false,'height':200,'width':'','uiColor':'','disableNativeSpellChecker':false,'autoUpdateElement':true});
+		addRemoveLink( $('.section').get(-2) );
+		return false;
+	});
 	sectionCalc();
 	$('.mmf_row.id_ingredient_copy input[id=Ingredient_quantity]').keydown(function(event) {
 		if(event.which >= 48 && event.which <= 90) {
@@ -96,12 +102,19 @@ $(function() {
 });
 </script>
 
-<a id="id_section" href="#" rel=".section" tabindex="-1">Add section</a>
+<a id="id_section" href="#" tabindex="-1">Add section</a>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'notes'); ?>
-		<?php echo $form->textArea($model,'notes',array('rows'=>8, 'cols'=>80)); ?>
-		<?php echo $form->error($model,'notes'); ?>
+<?php
+$this->widget('ext.editMe.widgets.ExtEditMe', array(
+	'model'=>$model,
+	'attribute'=>'notes',
+	'toolbar'=>array(
+		array( 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ),
+		array( 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Scayt' ),
+	),
+));
+?>
 	</div>
 
 	<div class="row">

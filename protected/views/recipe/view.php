@@ -52,14 +52,12 @@ foreach( $model->sections as $section ) {
 
 ?>
 </div>
-<div style="width:50%;float:right;">
-	<p style="padding:30px 15px 15px;">
+<div style="width:45%;float:right;padding:20px 15px 15px;">
 <?php
 
 	echo $section;
 
 ?>
-	</p>
 </div>
 <?php
 
@@ -71,7 +69,7 @@ $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
 		'description',
-		'notes',
+		'notes:html',
 		'source',
 		'category_id',
 	),
