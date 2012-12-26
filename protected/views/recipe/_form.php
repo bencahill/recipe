@@ -41,7 +41,8 @@ $ingredientFormConfig = array(
             'maxlength'=>40,
         ),
         'ingredient'=>array(
-            'type'=>'textarea',
+            'type'=>'text',
+            'maxlength'=>40,
         ),
         'section_id'=>array(
             'type'=>'hidden',
