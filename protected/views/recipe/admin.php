@@ -48,7 +48,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'notes',
 		'source',
 		/*
-		'servings',
+		'yield',
 		'create_time',
 		'update_time',
 		'category_id',

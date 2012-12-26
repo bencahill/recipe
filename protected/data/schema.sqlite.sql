@@ -12,7 +12,7 @@ CREATE TABLE tbl_recipe (
   description TEXT,
   notes TEXT,
   source TEXT,
-  servings INTEGER,
+  yield INTEGER,
   create_time INTEGER NOT NULL,
   update_time INTEGER,
   sections TEXT NOT NULL,

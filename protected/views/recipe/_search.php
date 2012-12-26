@@ -31,8 +31,8 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'servings'); ?>
-		<?php echo $form->textField($model,'servings'); ?>
+		<?php echo $form->label($model,'yield'); ?>
+		<?php echo $form->textField($model,'yield'); ?>
 	</div>
 
 	<div class="row">

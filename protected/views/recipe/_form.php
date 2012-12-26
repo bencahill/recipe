@@ -105,9 +105,9 @@ $(function() {
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'servings'); ?>
-		<?php echo $form->textField($model,'servings'); ?>
-		<?php echo $form->error($model,'servings'); ?>
+		<?php echo $form->labelEx($model,'yield'); ?>
+		<?php echo $form->textField($model,'yield'); ?>
+		<?php echo $form->error($model,'yield'); ?>
 	</div>
 
 	<div class="row">

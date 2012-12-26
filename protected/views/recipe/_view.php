@@ -20,8 +20,8 @@
 	<?php echo CHtml::encode($data->source); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('servings')); ?>:</b>
-	<?php echo CHtml::encode($data->servings); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('yield')); ?>:</b>
+	<?php echo CHtml::encode($data->yield); ?>
 	<br />
 
 	<?php /*

@@ -46,7 +46,7 @@ $this->widget('zii.widgets.CDetailView', array(
 		'description',
 		'notes',
 		'source',
-		'servings',
+		'yield',
 		'category_id',
 	),
 ));
