@@ -25,6 +25,14 @@ $this->widget('zii.widgets.CDetailView', array(
 ));
 
 $sectionId = 0;
+global $instructionCount;
+$instructionCount = 1;
+function numberInstructions($matches) {
+	global $instructionCount;
+	$withCount = $matches[1].$instructionCount.'. ';
+	$instructionCount++;
+	return $withCount;
+}
 foreach( $model->sections as $section ) {
 
 	$rawData = $model->getRelated('ingredients',false,array('condition'=>"section_id=$sectionId"));
@@ -55,7 +63,7 @@ foreach( $model->sections as $section ) {
 <div style="width:45%;float:right;padding:20px 15px 15px;">
 <?php
 
-	echo $section;
+	echo preg_replace_callback("|(<p>)|","numberInstructions",$section);
 
 ?>
 </div>
