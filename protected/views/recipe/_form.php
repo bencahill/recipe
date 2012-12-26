@@ -90,7 +90,7 @@ $(function() {
 });
 </script>
 
-<a id="id_section" href="#" rel=".section">Add section</a>
+<a id="id_section" href="#" rel=".section" tabindex="-1">Add section</a>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'notes'); ?>

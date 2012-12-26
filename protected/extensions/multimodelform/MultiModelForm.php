@@ -1090,7 +1090,8 @@ class MultiModelRenderForm extends CForm
         return CHtml::tag('a',
             array('id' => $this->parentWidget->id,
                 'href' => '#',
-                'rel' => '.' . $this->parentWidget->getCopyClass()
+                'rel' => '.' . $this->parentWidget->getCopyClass(),
+                'tabindex' => '-1'
             ),
             $this->parentWidget->addItemText
         );
