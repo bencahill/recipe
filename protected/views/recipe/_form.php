@@ -72,6 +72,13 @@ $this->widget('ext.multimodelform.MultiModelForm',array(
 $(function() {
 	$('#id_section').relCopy();
 	sectionCalc();
+	$('.mmf_row.id_ingredient_copy input[id=Ingredient_quantity]').keydown(function(event) {
+		if(event.which >= 48 && event.which <= 90) {
+			$('#id_ingredient').click();
+			$($('.mmf_row.id_ingredient_copy').get(-2)).find('input[id*=quantity]').focus();
+			$('.mmf_row.id_ingredient_copy input[id*=quantity]').filter(':not(:last)').unbind('keydown');
+		}
+	});
 });
 </script>
 
