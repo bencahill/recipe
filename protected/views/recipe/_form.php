@@ -40,10 +40,6 @@ $ingredientFormConfig = array(
             'type'=>'text',
             'maxlength'=>40,
         ),
-        'measurement'=>array(
-            'type'=>'text',
-            'maxlength'=>40,
-        ),
         'ingredient'=>array(
             'type'=>'textarea',
         ),

@@ -4,10 +4,6 @@
 	<?php echo CHtml::encode($data->quantity); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('measurement')); ?>:</b>
-	<?php echo CHtml::encode($data->measurement); ?>
-	<br />
-
 	<b><?php echo CHtml::encode($data->getAttributeLabel('ingredient')); ?>:</b>
 	<?php echo CHtml::encode($data->ingredient); ?>
 	<br />

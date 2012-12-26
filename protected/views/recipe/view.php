@@ -34,7 +34,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'summaryText'=>'',
 	'columns'=>array(
 		'quantity',
-		'measurement',
 		'ingredient',
 		'section_id',
 	),

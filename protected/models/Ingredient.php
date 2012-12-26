@@ -6,7 +6,6 @@
  * The followings are the available columns in table 'tbl_ingredient':
  * @property integer $id
  * @property string $quantity
- * @property string $measurement
  * @property string $ingredient
  * @property integer $position
  * @property integer $recipe_id
@@ -43,12 +42,12 @@ class Ingredient extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('quantity, measurement, ingredient, recipe_id, section_id', 'required'),
+			array('quantity, ingredient, recipe_id, section_id', 'required'),
 			array('recipe_id, section_id', 'numerical', 'integerOnly'=>true),
 			array('section_id', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, quantity, measurement, ingredient, recipe_id', 'safe', 'on'=>'search'),
+			array('id, quantity, ingredient, recipe_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -72,7 +71,6 @@ class Ingredient extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'quantity' => 'Quantity',
-			'measurement' => 'Measurement',
 			'ingredient' => 'Ingredient',
 			'recipe_id' => 'Recipe',
 			'section_id' => 'Section',
@@ -92,7 +90,6 @@ class Ingredient extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('quantity',$this->quantity,true);
-		$criteria->compare('measurement',$this->measurement,true);
 		$criteria->compare('ingredient',$this->ingredient,true);
 		$criteria->compare('recipe_id',$this->recipe_id);
 

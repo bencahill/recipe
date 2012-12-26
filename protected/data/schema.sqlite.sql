@@ -28,7 +28,6 @@ CREATE TABLE tbl_recipe (
 CREATE TABLE tbl_ingredient (
   id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   quantity TEXT NOT NULL,
-  measurement TEXT NOT NULL,
   ingredient TEXT NOT NULL,
   position INTEGER,
   recipe_id INTEGER NOT NULL,
