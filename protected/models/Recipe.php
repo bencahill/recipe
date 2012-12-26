@@ -10,7 +10,6 @@
  * @property string $notes
  * @property string $source
  * @property integer $servings
- * @property string $serving_unit
  * @property string $create_time
  * @property string $update_time
  * @property integer $sections
@@ -53,10 +52,10 @@ class Recipe extends CActiveRecord
 			array('title, sections, category_id', 'required'),
 			// array('title, create_time, category_id, author_id', 'required'),
 			array('servings, create_time, update_time, category_id, author_id', 'numerical', 'integerOnly'=>true),
-			array('description, notes, source, serving_unit, sections', 'safe'),
+			array('description, notes, source, sections', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, title, description, notes, source, servings, serving_unit, category_id, author_id', 'safe', 'on'=>'search'),
+			array('id, title, description, notes, source, servings, category_id, author_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -96,7 +95,6 @@ class Recipe extends CActiveRecord
 			'notes' => 'Notes',
 			'source' => 'Source',
 			'servings' => 'Servings',
-			'serving_unit' => 'Serving Unit',
 			'create_time' => 'Create Time',
 			'update_time' => 'Update Time',
 			'sections' => 'Sections',
@@ -122,7 +120,6 @@ class Recipe extends CActiveRecord
 		$criteria->compare('notes',$this->notes,true);
 		$criteria->compare('source',$this->source,true);
 		$criteria->compare('servings',$this->servings);
-		$criteria->compare('serving_unit',$this->serving_unit,true);
 		$criteria->compare('category_id',$this->category_id);
 		$criteria->compare('author_id',$this->author_id);
 

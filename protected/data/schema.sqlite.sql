@@ -13,7 +13,6 @@ CREATE TABLE tbl_recipe (
   notes TEXT,
   source TEXT,
   servings INTEGER,
-  serving_unit TEXT,
   create_time INTEGER NOT NULL,
   update_time INTEGER,
   sections TEXT NOT NULL,

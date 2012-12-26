@@ -111,12 +111,6 @@ $(function() {
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'serving_unit'); ?>
-		<?php echo $form->textField($model,'serving_unit'); ?>
-		<?php echo $form->error($model,'serving_unit'); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->labelEx($model,'category_id'); ?>
 		<?php echo $form->textField($model,'category_id'); ?>
 		<?php echo $form->error($model,'category_id'); ?>
