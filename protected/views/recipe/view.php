@@ -24,22 +24,48 @@ $this->widget('zii.widgets.CDetailView', array(
 	),
 ));
 
-$dataProvider = new CArrayDataProvider($model->ingredients, array(
-	'sort'=>array(
-		'defaultOrder'=>'position ASC',
-	),
-	'pagination'=>false,
-));
+$sectionId = 0;
+foreach( $model->sections as $section ) {
 
-$this->widget('zii.widgets.grid.CGridView', array(
-	'dataProvider'=>$dataProvider,
-	'summaryText'=>'',
-	'columns'=>array(
-		'quantity',
-		'ingredient',
-		'section_id',
-	),
-));
+	$rawData = $model->getRelated('ingredients',false,array('condition'=>"section_id=$sectionId"));
+
+	$dataProvider = new CArrayDataProvider($rawData, array(
+		'sort'=>array(
+			'defaultOrder'=>'position ASC',
+		),
+		'pagination'=>false,
+	));
+
+?>
+<div style="clear:both;width:50%;float:left;">
+<?php
+
+	$this->widget('zii.widgets.grid.CGridView', array(
+		'dataProvider'=>$dataProvider,
+		'summaryText'=>'',
+		'columns'=>array(
+			'quantity',
+			'ingredient',
+		),
+		'hideHeader'=>($sectionId > 0) ? true : false,
+	));
+
+?>
+</div>
+<div style="width:50%;float:right;">
+	<p style="padding:30px 15px 15px;">
+<?php
+
+	echo $section;
+
+?>
+	</p>
+</div>
+<?php
+
+	$sectionId++;
+
+}
 
 $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
