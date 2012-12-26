@@ -27,6 +27,7 @@ $dataProvider = new CArrayDataProvider($model->ingredients, array(
 	'sort'=>array(
 		'defaultOrder'=>'position ASC',
 	),
+	'pagination'=>false,
 ));
 
 $this->widget('zii.widgets.grid.CGridView', array(
