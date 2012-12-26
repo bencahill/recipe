@@ -18,7 +18,7 @@
 ?>
 	<div class="row">
 		<?php echo $form->labelEx($model,'title'); ?>
-		<?php echo $form->textArea($model,'title',array('rows'=>6, 'cols'=>50)); ?>
+		<?php echo $form->textField($model,'title'); ?>
 		<?php echo $form->error($model,'title'); ?>
 	</div>
 
@@ -38,11 +38,11 @@ $ingredientFormConfig = array(
       'elements'=>array(
         'quantity'=>array(
             'type'=>'text',
-            'maxlength'=>40,
+            'size'=>12,
         ),
         'ingredient'=>array(
             'type'=>'text',
-            'maxlength'=>40,
+            'size'=>24,
         ),
         'section_id'=>array(
             'type'=>'hidden',
@@ -94,13 +94,13 @@ $(function() {
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'notes'); ?>
-		<?php echo $form->textArea($model,'notes',array('rows'=>6, 'cols'=>50)); ?>
+		<?php echo $form->textArea($model,'notes',array('rows'=>8, 'cols'=>80)); ?>
 		<?php echo $form->error($model,'notes'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'source'); ?>
-		<?php echo $form->textArea($model,'source',array('rows'=>6, 'cols'=>50)); ?>
+		<?php echo $form->textField($model,'source'); ?>
 		<?php echo $form->error($model,'source'); ?>
 	</div>
 
@@ -112,7 +112,7 @@ $(function() {
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'serving_unit'); ?>
-		<?php echo $form->textArea($model,'serving_unit',array('rows'=>6, 'cols'=>50)); ?>
+		<?php echo $form->textField($model,'serving_unit'); ?>
 		<?php echo $form->error($model,'serving_unit'); ?>
 	</div>
 

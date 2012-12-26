@@ -20,12 +20,13 @@ foreach( $model->sections as $section ):
 ?>
 <table style="display:none;">
 	<tr class="mmf_row section">
-		<td class="mmf_cell">
+		<td class="mmf_cell" colspan="2">
 			<label for="Recipe_section_<?php echo $sectionCount; ?>_">
 			Instructions
 			</label>
-			<textarea name="Recipe[sections][]" id="Recipe_section_<?php echo $sectionCount; ?>_"><?php echo $section; ?></textarea>
+			<textarea rows="8" cols="80" name="Recipe[sections][]" id="Recipe_section_<?php echo $sectionCount; ?>_"><?php echo $section; ?></textarea>
 		</td>
+		<td class="mmf_cell"></td>
 	</tr>
 </table>
 <?php

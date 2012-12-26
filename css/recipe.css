@@ -1,0 +1,5 @@
+td.mmf_cell{ padding:0px; }
+.mmf_table{ margin:10px 0 0; }
+.mmf_table th:first-child, .mmf_table td:first-child{ width:100px; }
+#id_section{ display:block; margin-bottom:15px; }
+.mmf_row.section textarea{ margin-bottom:20px; }

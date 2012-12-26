@@ -16,5 +16,5 @@ function sectionCalc() {
 }
 
 function addRemoveLink( target ) {
-	$(target).append('<span><a onclick="if(confirm(\'Delete this item?\')) $(this).parent().parent().remove(); return false;" href="#">Remove</a></span>');
+	$(target).find('td:last').append('<span><a onclick="if(confirm(\'Delete this item?\')) $(this).parent().parent().parent().remove(); return false;" href="#">Remove</a></span>');
 }
