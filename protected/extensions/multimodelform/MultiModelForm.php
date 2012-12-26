@@ -99,7 +99,9 @@ class MultiModelForm extends CWidget
      *
      * @var array $removeHtmlOptions
      */
-    public $removeHtmlOptions = array();
+    public $removeHtmlOptions = array(
+        'tabindex' => -1
+	);
 
     /**
      * Show elements as table
