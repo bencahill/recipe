@@ -155,7 +155,7 @@ class MultiModelForm extends CWidget
 		}',
 		'stop' => 'js:function( event, ui) {
 			sectionCalc();
-			$(ui.item).find("textarea").ckeditor({"toolbar":[["Bold","Italic","Underline","Strike","Subscript","Superscript","-","RemoveFormat"],["NumberedList","BulletedList","-","Outdent","Indent","-","Scayt"]],"forcePasteAsPlainText":true,"extraPlugins":"","removeDialogTabs":"","contentsCss":["/assets/e07a29c9/contents.css"],"resize_enabled":true,"resize_dir":"both","autoGrow_onStartup":false,"language":"","baseHref":"","bodyClass":"","bodyId":"","docType":"","filebrowserBrowseUrl":"","filebrowserFlashBrowseUrl":"","filebrowserImageBrowseUrl":"","filebrowserFlashUploadUrl":"","filebrowserUploadUrl":"","filebrowserImageBrowseLinkUrl":"","filebrowserImageUploadUrl":"","fullPage":false,"height":200,"width":"","uiColor":"","disableNativeSpellChecker":false,"autoUpdateElement":true});
+			$(ui.item).find("textarea").ckeditor({"toolbar":[["Bold","Italic","Underline","Strike","Subscript","Superscript","-","RemoveFormat"],["NumberedList","BulletedList","-","Outdent","Indent","-","SpellChecker","Scayt"]],"forcePasteAsPlainText":true,"extraPlugins":"","removeDialogTabs":"","contentsCss":["/assets/e07a29c9/contents.css"],"resize_enabled":true,"resize_dir":"both","autoGrow_onStartup":false,"language":"","baseHref":"","bodyClass":"","bodyId":"","docType":"","filebrowserBrowseUrl":"","filebrowserFlashBrowseUrl":"","filebrowserImageBrowseUrl":"","filebrowserFlashUploadUrl":"","filebrowserUploadUrl":"","filebrowserImageBrowseLinkUrl":"","filebrowserImageUploadUrl":"","fullPage":false,"height":200,"width":"","uiColor":"","disableNativeSpellChecker":false,"autoUpdateElement":true});
 		}',
 
     );

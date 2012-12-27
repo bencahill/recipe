@@ -76,7 +76,7 @@ $(function() {
 	$('#id_section').click(function() {
 		var id = ($('.section').length + 1);
 		$('.mmf_row:not(.section)').last().before('<tr class="mmf_row section"> <td class="mmf_cell" colspan="2"> <label for="Recipe_section'+id+'"> Instructions </label> <textarea name="Recipe[sections][]" id="Recipe_section'+id+'"></textarea> </td> <td class="mmf_cell"></td> </tr>');
-		$('#Recipe_section'+id).ckeditor({'toolbar':[['Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat'],['NumberedList','BulletedList','-','Outdent','Indent','-','Scayt']],'forcePasteAsPlainText':true,'extraPlugins':'','removeDialogTabs':'','contentsCss':['/assets/e07a29c9/contents.css'],'resize_enabled':true,'resize_dir':'both','autoGrow_onStartup':false,'language':'','baseHref':'','bodyClass':'','bodyId':'','docType':'','filebrowserBrowseUrl':'','filebrowserFlashBrowseUrl':'','filebrowserImageBrowseUrl':'','filebrowserFlashUploadUrl':'','filebrowserUploadUrl':'','filebrowserImageBrowseLinkUrl':'','filebrowserImageUploadUrl':'','fullPage':false,'height':200,'width':'','uiColor':'','disableNativeSpellChecker':false,'autoUpdateElement':true});
+		$('#Recipe_section'+id).ckeditor({'toolbar':[['Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat'],['NumberedList','BulletedList','-','Outdent','Indent','-','SpellChecker','Scayt']],'forcePasteAsPlainText':true,'extraPlugins':'','removeDialogTabs':'','contentsCss':['/assets/e07a29c9/contents.css'],'resize_enabled':true,'resize_dir':'both','autoGrow_onStartup':false,'language':'','baseHref':'','bodyClass':'','bodyId':'','docType':'','filebrowserBrowseUrl':'','filebrowserFlashBrowseUrl':'','filebrowserImageBrowseUrl':'','filebrowserFlashUploadUrl':'','filebrowserUploadUrl':'','filebrowserImageBrowseLinkUrl':'','filebrowserImageUploadUrl':'','fullPage':false,'height':200,'width':'','uiColor':'','disableNativeSpellChecker':false,'autoUpdateElement':true});
 		addRemoveLink( $('.section').get(-2) );
 		return false;
 	});
@@ -111,7 +111,7 @@ $this->widget('ext.editMe.widgets.ExtEditMe', array(
 	'attribute'=>'notes',
 	'toolbar'=>array(
 		array( 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ),
-		array( 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Scayt' ),
+		array( 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'SpellChecker', 'Scayt' ),
 	),
 ));
 ?>

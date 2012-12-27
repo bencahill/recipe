@@ -35,7 +35,7 @@ foreach( $model->sections as $section ):
 				'value'=>$section,
 				'toolbar'=>array(
 					array( 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ),
-					array( 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Scayt' ),
+					array( 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'SpellChecker', 'Scayt' ),
 				),
 			));
 ?>
