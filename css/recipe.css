@@ -8,3 +8,4 @@ td.mmf_cell{ padding:0px; }
 .instructions.left{ clear:both; width:50%; float:left; }
 .instructions.right{ width:45%; float:right; padding:20px 15px 15px; }
 .instructions.right.first{ padding-top:40px; }
+.items td:nth-child(2):first-letter{ text-transform:uppercase; }
