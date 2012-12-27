@@ -88,11 +88,11 @@ $(function() {
 			$('.mmf_row.id_ingredient_copy input[id*=quantity]').filter(':not(:last)').unbind('keydown');
 		}
 	});
-	$('.mmf_cell input').keydown(function(event) {
+	$('input').keydown(function(event) {
 		if(event.which == 13) {
 			event.preventDefault();
 			var $this = $(this);
-			var $inputs = $('.mmf_cell input');
+			var $inputs = $('input,textarea');
 			var index = $inputs.index($this);
 			var next = $inputs.get((index+1));
 			$this.blur();
