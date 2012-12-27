@@ -45,7 +45,7 @@ foreach( $model->sections as $section ) {
 	));
 
 ?>
-<div style="clear:both;width:50%;float:left;">
+<div class="instructions left">
 <?php
 
 	$this->widget('zii.widgets.grid.CGridView', array(
@@ -60,7 +60,7 @@ foreach( $model->sections as $section ) {
 
 ?>
 </div>
-<div style="width:45%;float:right;padding:20px 15px 15px;">
+<div class="instructions right<?php if($sectionId==0){echo ' first';} ?>">
 <?php
 
 	if( $model->number_instructions ) {
