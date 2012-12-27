@@ -152,6 +152,7 @@ class MultiModelForm extends CWidget
 			$(ui.item).find("textarea").each(function() {
 				$(this).ckeditorGet().destroy();
 			});
+			ui.placeholder.height(ui.item.height());
 		}',
 		'stop' => 'js:function( event, ui) {
 			sectionCalc();
