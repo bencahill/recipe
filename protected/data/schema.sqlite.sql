@@ -16,6 +16,7 @@ CREATE TABLE tbl_recipe (
   create_time INTEGER NOT NULL,
   update_time INTEGER,
   sections TEXT NOT NULL,
+  number_instructions TEXT,
   category_id INTEGER NOT NULL,
   author_id INTEGER NOT NULL,
   CONSTRAINT FK_recipe_author FOREIGN KEY (author_id)

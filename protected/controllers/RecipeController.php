@@ -90,6 +90,8 @@ class RecipeController extends Controller
 			}
 		}
 
+		$model->number_instructions = 1;
+
 		$this->render('create',array(
 			'model'=>$model,
 			//submit the ingredient and validatedItems to the widget in the edit form

@@ -63,7 +63,11 @@ foreach( $model->sections as $section ) {
 <div style="width:45%;float:right;padding:20px 15px 15px;">
 <?php
 
-	echo preg_replace_callback("|(<p>)|","numberInstructions",$section);
+	if( $model->number_instructions ) {
+		echo preg_replace_callback("|(<p>)|","numberInstructions",$section);
+	} else {
+		echo $section;
+	}
 
 ?>
 </div>

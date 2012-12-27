@@ -118,6 +118,12 @@ $this->widget('ext.editMe.widgets.ExtEditMe', array(
 	</div>
 
 	<div class="row">
+		<?php echo $form->labelEx($model,'number_instructions'); ?>
+		<?php echo $form->checkBox($model,'number_instructions',array('value'=>'1','uncheckValue'=>0)); ?>
+		<?php echo $form->error($model,'number_instructions'); ?>
+	</div>
+
+	<div class="row">
 		<?php echo $form->labelEx($model,'source'); ?>
 		<?php echo $form->textField($model,'source'); ?>
 		<?php echo $form->error($model,'source'); ?>

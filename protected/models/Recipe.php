@@ -13,6 +13,7 @@
  * @property string $create_time
  * @property string $update_time
  * @property integer $sections
+ * @property integer $number_instructions
  * @property integer $category_id
  * @property integer $author_id
  *
@@ -51,8 +52,8 @@ class Recipe extends CActiveRecord
 		return array(
 			array('title, sections, category_id', 'required'),
 			// array('title, create_time, category_id, author_id', 'required'),
-			array('create_time, update_time, category_id, author_id', 'numerical', 'integerOnly'=>true),
-			array('description, notes, source, yield, sections', 'safe'),
+			array('create_time, update_time, number_instructions, category_id, author_id', 'numerical', 'integerOnly'=>true),
+			array('description, notes, source, yield, sections, number_instructions', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, title, description, notes, source, yield, category_id, author_id', 'safe', 'on'=>'search'),
@@ -98,6 +99,7 @@ class Recipe extends CActiveRecord
 			'create_time' => 'Create Time',
 			'update_time' => 'Update Time',
 			'sections' => 'Sections',
+			'number_instructions' => 'Number Instructions',
 			'category_id' => 'Category',
 			'author_id' => 'Author',
 		);
