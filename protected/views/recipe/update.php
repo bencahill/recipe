@@ -52,7 +52,11 @@ $(function() {
 	$sections = $('.section');
 	for( i = 0; i < $sections.length; i++ ) {
 		$lastIng = $('.mmf_row').not('.section').find('[id*=section]').filter('[value='+i+']').last().parent();
-		$('.section').not('#mmf_sortable .section').first().insertAfter($lastIng);
+		if( $lastIng.length > 0 ) {
+			$('.section').not('#mmf_sortable .section').first().insertAfter($lastIng);
+		} else {
+			$('.section').not('#mmf_sortable .section').first().insertAfter($('.mmf_row').last());
+		}
 	}
 	$('.section').last().appendTo($('#mmf_sortable'));
 	addRemoveLink( $('.section').filter(':not(:last)') );
