@@ -34,8 +34,8 @@
 		<?php echo $form->error($model,'columns'); ?>
 	</div>
 
-	<table style="display:none;">
-		<tr class="yields">
+	<table class="yields mmf_table" style="display:none;">
+		<tr>
 			<td class="mmf_cell"></td>
 			<td class="mmf_cell">
 				<?php echo $form->labelEx($model,'yield1'); ?>
@@ -71,7 +71,7 @@
 			$sectionCount++;
 		?>
 			<tr class="mmf_row section">
-				<td class="mmf_cell" colspan="7">
+				<td class="mmf_cell" colspan="6">
 					<label for="Recipe_section_<?php echo $sectionCount; ?>_">
 					Instructions
 					</label>
@@ -97,6 +97,8 @@
 		endforeach;
 		?>
 	</table>
+
+	<div id="scrollanchor"></div>
 
 <?php
  
@@ -192,11 +194,28 @@ $(function() {
 			$(next).select().focus();
 		}
 	});
-	$('.yields').prependTo('.mmf_table thead');
+	$('.yields').insertBefore('.mmf_table:not(.yields)').show();
+	$('<tr><td class="mmf_cell"></td><td class="mmf_cell"></td><td class="mmf_cell"></td><td class="mmf_cell"></td><td class="mmf_cell"></td><td class="mmf_cell"></td><td class="mmf_cell"></td></tr>').prependTo($('.mmf_table:not(.yields) thead'));
 	updateColumns();
 	$('#Recipe_columns').change(function() {
 		updateColumns();
 	});
+	$(".mmf_table.yields").width($('.mmf_table:not(.yields) thead').width());
+	var a = function() {
+		var b = $(window).scrollTop();
+		var s = $("#scrollanchor");
+		var d = s.offset().top;
+		var e = $(".section").last().offset().top;
+		var c=$(".mmf_table.yields");
+		if (b>d && b<e) {
+			c.css({position:"fixed",top:"0px"});
+			s.height(c.outerHeight());
+		} else {
+			c.css({position:"relative",top:""});
+			s.height(0);
+		}
+	};
+	$(window).scroll(a);a()
 });
 </script>
 

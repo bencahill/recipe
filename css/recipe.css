@@ -1,10 +1,10 @@
 td.mmf_cell{ padding:0px; }
 .mmf_table{ margin:10px 0 0; }
-.mmf_table th, .mmf_table td{ width:12%; }
 .mmf_table th, .mmf_table thead td label{ font-size:.8em !important; }
 .mmf_table thead td label{ font-weight:normal !important; }
 .mmf_table th:first-child, .mmf_table td:first-child{ width:16%; }
 .mmf_table th:last-child{ background:transparent; }
+.mmf_table.yields{ background:white; z-index:10; margin:0; padding-top:10px; border-bottom:1px solid lightgrey; }
 .grid-view th:first-child, .grid-view td:first-child{ width:100px; }
 .grid-view th:nth-child(2), .grid-view td:nth-child(2){ width:200px; }
 #id_section{ display:block; margin-bottom:15px; }
