@@ -14,54 +14,13 @@ $this->menu=array(
 ?>
 
 <?php
-$sectionCount = 0;
-foreach( $model->sections as $section ):
-	$sectionCount++;
+global $sections;
+if( empty($_POST['Recipe']) ) {
+	$sections = $model->sections;
+} else {
+	$sections = $_POST['Recipe']['sections'];
+}
 ?>
-<table style="display:none;">
-	<tr class="mmf_row section">
-		<td class="mmf_cell" colspan="2">
-			<label for="Recipe_section_<?php echo $sectionCount; ?>_">
-			Instructions
-			</label>
-<?php
-			$this->widget('ext.editMe.widgets.ExtEditMe', array(
-				'name'=>'Recipe[sections][]',
-				'htmlOptions'=>array(
-					'rows'=>8,
-					'cols'=>80,
-					'id'=>'Recipe_section_'.$sectionCount.'_',
-				),
-				'value'=>$section,
-				'toolbar'=>array(
-					array( 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ),
-					array( 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'SpellChecker', 'Scayt' ),
-				),
-			));
-?>
-		</td>
-		<td class="mmf_cell"></td>
-	</tr>
-</table>
-<?php
-endforeach;
-?>
-
-<script type="text/javascript">
-$(function() {
-	$sections = $('.section');
-	for( i = 0; i < $sections.length; i++ ) {
-		$lastIng = $('.mmf_row').not('.section').find('[id*=section]').filter('[value='+i+']').last().parent();
-		if( $lastIng.length > 0 ) {
-			$('.section').not('#mmf_sortable .section').first().insertAfter($lastIng);
-		} else {
-			$('.section').not('#mmf_sortable .section').first().insertAfter($('.mmf_row').last());
-		}
-	}
-	$('.section').last().appendTo($('#mmf_sortable'));
-	addRemoveLink( $('.section').filter(':not(:last)') );
-});
-</script>
 
 <h1>Update Recipe <?php echo $model->id; ?></h1>
 

@@ -23,16 +23,80 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'yield'); ?>
-		<?php echo $form->textArea($model,'yield',array('rows'=>2, 'cols'=>20)); ?>
-		<?php echo $form->error($model,'yield'); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->labelEx($model,'description'); ?>
 		<?php echo $form->textArea($model,'description',array('rows'=>6, 'cols'=>50)); ?>
 		<?php echo $form->error($model,'description'); ?>
 	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'columns'); ?>
+		<?php echo $form->dropDownList($model,'columns',array(1=>1,2=>2,3=>3,4=>4,5=>5)); ?>
+		<?php echo $form->error($model,'columns'); ?>
+	</div>
+
+	<table style="display:none;">
+		<tr class="yields">
+			<td class="mmf_cell"></td>
+			<td class="mmf_cell">
+				<?php echo $form->labelEx($model,'yield1'); ?>
+				<?php echo $form->textArea($model,'yield1',array('rows'=>2, 'cols'=>10)); ?>
+				<?php echo $form->error($model,'yield1'); ?>
+			</td>
+			<td class="mmf_cell">
+				<?php echo $form->labelEx($model,'yield2'); ?>
+				<?php echo $form->textArea($model,'yield2',array('rows'=>2, 'cols'=>10)); ?>
+				<?php echo $form->error($model,'yield2'); ?>
+			</td>
+			<td class="mmf_cell">
+				<?php echo $form->labelEx($model,'yield3'); ?>
+				<?php echo $form->textArea($model,'yield3',array('rows'=>2, 'cols'=>10)); ?>
+				<?php echo $form->error($model,'yield3'); ?>
+			</td>
+			<td class="mmf_cell">
+				<?php echo $form->labelEx($model,'yield4'); ?>
+				<?php echo $form->textArea($model,'yield4',array('rows'=>2, 'cols'=>10)); ?>
+				<?php echo $form->error($model,'yield4'); ?>
+			</td>
+			<td class="mmf_cell">
+				<?php echo $form->labelEx($model,'yield5'); ?>
+				<?php echo $form->textArea($model,'yield5',array('rows'=>2, 'cols'=>10)); ?>
+				<?php echo $form->error($model,'yield5'); ?>
+			</td>
+			<td class="mmf_cell"></td>
+		</tr>
+		<?php
+		$sectionCount = 0;
+		global $sections;
+		foreach( $sections as $section ):
+			$sectionCount++;
+		?>
+			<tr class="mmf_row section">
+				<td class="mmf_cell" colspan="7">
+					<label for="Recipe_section_<?php echo $sectionCount; ?>_">
+					Instructions
+					</label>
+		<?php
+					$this->widget('ext.editMe.widgets.ExtEditMe', array(
+						'name'=>'Recipe[sections][]',
+						'htmlOptions'=>array(
+							'rows'=>8,
+							'cols'=>80,
+							'id'=>'Recipe_section_'.$sectionCount.'_',
+						),
+						'value'=>$section,
+						'toolbar'=>array(
+							array( 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ),
+							array( 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'SpellChecker', 'Scayt' ),
+						),
+					));
+		?>
+				</td>
+				<td class="mmf_cell"></td>
+			</tr>
+		<?php
+		endforeach;
+		?>
+	</table>
 
 <?php
  
@@ -42,16 +106,33 @@
  
 $ingredientFormConfig = array(
       'elements'=>array(
-        'quantity'=>array(
+        'name'=>array(
             'type'=>'text',
-            'size'=>12,
+            'size'=>16,
         ),
-        'ingredient'=>array(
+        'quantity1'=>array(
             'type'=>'text',
-            'size'=>24,
+            'size'=>13,
+        ),
+        'quantity2'=>array(
+            'type'=>'text',
+            'size'=>13,
+        ),
+        'quantity3'=>array(
+            'type'=>'text',
+            'size'=>13,
+        ),
+        'quantity4'=>array(
+            'type'=>'text',
+            'size'=>13,
+        ),
+        'quantity5'=>array(
+            'type'=>'text',
+            'size'=>13,
         ),
         'section_id'=>array(
             'type'=>'hidden',
+            'visible'=>false,
         ),
     ));
 
@@ -73,6 +154,18 @@ $this->widget('ext.multimodelform.MultiModelForm',array(
 
 <script type="text/javascript">
 $(function() {
+    $sections = $('.section');
+    for( i = 0; i < $sections.length; i++ ) {
+        $lastIng = $('.mmf_row').not('.section').find('[id*=section]').filter('[value='+i+']').last().parent();
+        if( $lastIng.length > 0 ) {
+            $('.section').not('#mmf_sortable .section').first().insertAfter($lastIng);
+        } else {
+            $('.section').not('#mmf_sortable .section').first().insertAfter($('.mmf_row').last());
+        }
+    }
+    $('.section').last().appendTo($('#mmf_sortable'));
+    addRemoveLink( $('.section').filter(':not(:last)') );
+
 	$('#id_section').click(function() {
 		var id = ($('.section').length + 1);
 		$('.mmf_row:not(.section)').last().before('<tr class="mmf_row section"> <td class="mmf_cell" colspan="2"> <label for="Recipe_section'+id+'"> Instructions </label> <textarea name="Recipe[sections][]" id="Recipe_section'+id+'"></textarea> </td> <td class="mmf_cell"></td> </tr>');
@@ -81,11 +174,11 @@ $(function() {
 		return false;
 	});
 	sectionCalc();
-	$('.mmf_row.id_ingredient_copy input[id=Ingredient_quantity]').keydown(function(event) {
+	$('.mmf_row.id_ingredient_copy input[id=Ingredient_name]').keydown(function(event) {
 		if(event.which >= 48 && event.which <= 90) {
 			$('#id_ingredient').click();
-			$($('.mmf_row.id_ingredient_copy').get(-2)).find('input[id*=quantity]').focus();
-			$('.mmf_row.id_ingredient_copy input[id*=quantity]').filter(':not(:last)').unbind('keydown');
+			$($('.mmf_row.id_ingredient_copy').get(-2)).find('input[id*=name]').focus();
+			$('.mmf_row.id_ingredient_copy input[id*=name]').filter(':not(:last)').unbind('keydown');
 		}
 	});
 	$('input').keydown(function(event) {
@@ -98,6 +191,11 @@ $(function() {
 			$this.blur();
 			$(next).select().focus();
 		}
+	});
+	$('.yields').prependTo('.mmf_table thead');
+	updateColumns();
+	$('#Recipe_columns').change(function() {
+		updateColumns();
 	});
 });
 </script>

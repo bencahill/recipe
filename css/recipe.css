@@ -1,6 +1,10 @@
 td.mmf_cell{ padding:0px; }
 .mmf_table{ margin:10px 0 0; }
-.mmf_table th:first-child, .mmf_table td:first-child{ width:100px; }
+.mmf_table th, .mmf_table td{ width:12%; }
+.mmf_table th, .mmf_table thead td label{ font-size:.8em !important; }
+.mmf_table thead td label{ font-weight:normal !important; }
+.mmf_table th:first-child, .mmf_table td:first-child{ width:16%; }
+.mmf_table th:last-child{ background:transparent; }
 .grid-view th:first-child, .grid-view td:first-child{ width:100px; }
 .grid-view th:nth-child(2), .grid-view td:nth-child(2){ width:200px; }
 #id_section{ display:block; margin-bottom:15px; }
@@ -8,4 +12,16 @@ td.mmf_cell{ padding:0px; }
 .instructions.left{ clear:both; width:50%; float:left; }
 .instructions.right{ width:45%; float:right; padding:20px 15px 15px; }
 .instructions.right.first{ padding-top:40px; }
-.items td:nth-child(2):first-letter{ text-transform:uppercase; }
+#ingredientView td:first-child:first-letter{ text-transform:uppercase; }
+
+#ingredientView table, #ingredientView tbody, #ingredientView tr, #ingredientView td{ vertical-align:top !important; border:0; background:transparent; }
+#ingredientView th:first-child, #ingredientView td:first-child{ width:20%; }
+#ingredientView th:nth-child(2), #ingredientView td:nth-child(2),
+#ingredientView th:nth-child(3), #ingredientView td:nth-child(3),
+#ingredientView th:nth-child(4), #ingredientView td:nth-child(4),
+#ingredientView th:nth-child(5), #ingredientView td:nth-child(5),
+#ingredientView th:nth-child(6), #ingredientView td:nth-child(6){ width:10%; }
+#ingredientView th:last-child, #ingredientView td:last-child{ width:auto; }
+#ingredientView tbody tr:first-child{ display:none; }
+#ingredientView thead td p{ font-size:.75em; }
+#ingredientView td.extrarow{ text-indent:-9999px; border-bottom:1px solid #CCC; }

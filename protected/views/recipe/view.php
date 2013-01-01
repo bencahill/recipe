@@ -16,15 +16,38 @@ $this->menu=array(
 <h1><?php echo $model->title; ?></h1>
 
 <?php
-$this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model,
-	'attributes'=>array(
-		'yield',
-		'id',
-	),
-));
+$sections = array();
+if( $model->number_instructions ) {
+	foreach( $model->sections as $section ) {
+		$sections[] = preg_replace_callback("|(<p>)|","numberInstructions",$section);
+	}
+}
+else {
+	$sections = $model->sections;
+}
 
-$sectionId = 0;
+$yields = '<table style="display:none"><tr class="yields"><td></td>';
+$yieldIngredients = array( array('name'=>'Name', 'value'=>'$data->name') );
+for( $i = 1; $i <= 5; $i++ ) {
+	if( !empty( $model->{'yield'.$i} ) ) {
+		$yields .= "<td><p>Yield</p>{$model->{'yield'.$i}}</td>";
+		$yieldIngredients[] = array('name'=>'Quantity', 'value'=>'$data->quantity'.$i);
+	}
+}
+$yields .= '<td></td></tr></table>';
+if( empty( $model->yield2 ) ) {
+	$yields = "<p>Yield: $model->yield1</p>";
+}
+$yieldIngredients[] = array(
+	'name'=>'Instructions',
+	'type'=>'raw',
+	'value'=>function($data) use ($sections) {
+		return $sections[$data->section_id];
+	}
+);
+
+echo $yields;
+
 global $instructionCount;
 $instructionCount = 1;
 function numberInstructions($matches) {
@@ -33,49 +56,24 @@ function numberInstructions($matches) {
 	$instructionCount++;
 	return $withCount;
 }
-foreach( $model->sections as $section ) {
 
-	$rawData = $model->getRelated('ingredients',false,array('condition'=>"section_id=$sectionId"));
+$rawData = $model->getRelated('ingredients',false);
 
-	$dataProvider = new CArrayDataProvider($rawData, array(
-		'sort'=>array(
-			'defaultOrder'=>'position ASC',
-		),
-		'pagination'=>false,
-	));
+$dataProvider = new CArrayDataProvider($rawData, array(
+	'sort'=>array(
+		'defaultOrder'=>'position ASC',
+	),
+	'pagination'=>false,
+));
 
-?>
-<div class="instructions left">
-<?php
-
-	$this->widget('zii.widgets.grid.CGridView', array(
-		'dataProvider'=>$dataProvider,
-		'summaryText'=>'',
-		'columns'=>array(
-			'quantity',
-			'ingredient',
-		),
-		'hideHeader'=>($sectionId > 0) ? true : false,
-	));
-
-?>
-</div>
-<div class="instructions right<?php if($sectionId==0){echo ' first';} ?>">
-<?php
-
-	if( $model->number_instructions ) {
-		echo preg_replace_callback("|(<p>)|","numberInstructions",$section);
-	} else {
-		echo $section;
-	}
-
-?>
-</div>
-<?php
-
-	$sectionId++;
-
-}
+$this->widget('ext.groupgridview.GroupGridView', array(
+	'id'=>'ingredientView',
+	'dataProvider'=>$dataProvider,
+	'summaryText'=>'',
+	'mergeColumns'=>array('Instructions'),
+	'extraRowColumns'=>array('section_id'),
+	'columns'=>$yieldIngredients,
+));
 
 $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
@@ -83,7 +81,12 @@ $this->widget('zii.widgets.CDetailView', array(
 		'description',
 		'notes:html',
 		'source',
+		'columns',
 		'category_id',
 	),
 ));
 ?>
+
+<script type="text/javascript">
+$('.yields').prependTo('#ingredientView thead');
+</script>

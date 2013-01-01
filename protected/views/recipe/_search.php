@@ -31,8 +31,33 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'yield'); ?>
-		<?php echo $form->textField($model,'yield'); ?>
+		<?php echo $form->label($model,'column'); ?>
+		<?php echo $form->textField($model,'column'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'yield1'); ?>
+		<?php echo $form->textField($model,'yield1'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'yield2'); ?>
+		<?php echo $form->textField($model,'yield2'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'yield3'); ?>
+		<?php echo $form->textField($model,'yield3'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'yield4'); ?>
+		<?php echo $form->textField($model,'yield4'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'yield5'); ?>
+		<?php echo $form->textField($model,'yield5'); ?>
 	</div>
 
 	<div class="row">

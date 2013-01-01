@@ -9,7 +9,12 @@
  * @property string $description
  * @property string $notes
  * @property string $source
- * @property string $yield
+ * @property integer $columns
+ * @property string $yield1
+ * @property string $yield2
+ * @property string $yield3
+ * @property string $yield4
+ * @property string $yield5
  * @property string $create_time
  * @property string $update_time
  * @property integer $sections
@@ -50,13 +55,13 @@ class Recipe extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('title, sections, category_id', 'required'),
+			array('title, columns, sections, category_id', 'required'),
 			// array('title, create_time, category_id, author_id', 'required'),
 			array('create_time, update_time, number_instructions, category_id, author_id', 'numerical', 'integerOnly'=>true),
-			array('description, notes, source, yield, sections, number_instructions', 'safe'),
+			array('description, notes, source, yield1, yield2, yield3, yield4, yield5, sections, number_instructions', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, title, description, notes, source, yield, category_id, author_id', 'safe', 'on'=>'search'),
+			array('id, title, description, notes, source, columns, yield1, yield2, yield3, yield4, yield5, category_id, author_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -95,7 +100,12 @@ class Recipe extends CActiveRecord
 			'description' => 'Description',
 			'notes' => 'Notes',
 			'source' => 'Source',
-			'yield' => 'Yield',
+			'columns' => 'Columns',
+			'yield1' => 'Yield',
+			'yield2' => 'Yield',
+			'yield3' => 'Yield',
+			'yield4' => 'Yield',
+			'yield5' => 'Yield',
 			'create_time' => 'Create Time',
 			'update_time' => 'Update Time',
 			'sections' => 'Sections',
@@ -121,7 +131,12 @@ class Recipe extends CActiveRecord
 		$criteria->compare('description',$this->description,true);
 		$criteria->compare('notes',$this->notes,true);
 		$criteria->compare('source',$this->source,true);
-		$criteria->compare('yield',$this->yield);
+		$criteria->compare('columns',$this->columns);
+		$criteria->compare('yield1',$this->yield1);
+		$criteria->compare('yield2',$this->yield2);
+		$criteria->compare('yield3',$this->yield3);
+		$criteria->compare('yield4',$this->yield4);
+		$criteria->compare('yield5',$this->yield5);
 		$criteria->compare('category_id',$this->category_id);
 		$criteria->compare('author_id',$this->author_id);
 

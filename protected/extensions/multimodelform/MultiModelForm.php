@@ -1015,8 +1015,10 @@ class MultiModelRenderForm extends CForm
 
                 if ($this->isCopyTemplate) // new fieldset
                 {
-                    if ($element->visible)
-                    {
+                    // if ($element->visible)\
+
+                    // {\
+
                         //v.2.2 support for checkboxlist radiolist
                         //Array types have to be rendered as array in the CopyTemplate
                         $element->name = $this->isElementArrayType($element->type) ? $elemName . '[][]' : $elemName . '[]';
@@ -1027,7 +1029,8 @@ class MultiModelRenderForm extends CForm
                         $elemOutput .= $element->render();
                         //bugfix: v2.1 - don't render hidden inputs in table cell
                         $output .= $element->type == 'hidden' ? $elemOutput : $this->getWrappedRow($elemOutput);
-                    }
+                    // }\
+
                 }
                 elseif (!empty($this->primaryKey))
                 { // existing fieldsets update
@@ -1046,8 +1049,10 @@ class MultiModelRenderForm extends CForm
                 }
                 else
                 { //in validation error mode: the new added items before
-                    if ($element->visible)
-                    {
+                    // if ($element->visible)\
+
+                    // {\
+
                         $prefix = 'n__';
                         $element->name = '[' . $prefix . '][' . $this->index . ']' . $elemName;
 
@@ -1059,7 +1064,8 @@ class MultiModelRenderForm extends CForm
                             $elemOutput .= $element->render();
                             $output .= $this->getWrappedRow($elemOutput);
                         }
-                    }
+                    // }\
+
                 }
             }
         }

@@ -48,7 +48,12 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'notes',
 		'source',
 		/*
-		'yield',
+		'columns',
+		'yield1',
+		'yield2',
+		'yield3',
+		'yield4',
+		'yield5',
 		'create_time',
 		'update_time',
 		'category_id',

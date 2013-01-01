@@ -5,8 +5,12 @@
  *
  * The followings are the available columns in table 'tbl_ingredient':
  * @property integer $id
- * @property string $quantity
- * @property string $ingredient
+ * @property string $quantity1
+ * @property string $quantity2
+ * @property string $quantity3
+ * @property string $quantity4
+ * @property string $quantity5
+ * @property string $name
  * @property integer $position
  * @property integer $recipe_id
  * @property integer $section_id
@@ -42,12 +46,12 @@ class Ingredient extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('quantity, ingredient, recipe_id, section_id', 'required'),
+			array('name, recipe_id, section_id', 'required'),
 			array('recipe_id, section_id', 'numerical', 'integerOnly'=>true),
-			array('section_id', 'safe'),
+			array('quantity1, quantity2, quantity3, quantity4, quantity5, section_id', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, quantity, ingredient, recipe_id', 'safe', 'on'=>'search'),
+			array('id, quantity1, quantity2, quantity3, quantity4, quantity5, name, recipe_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -70,8 +74,12 @@ class Ingredient extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'quantity' => 'Quantity',
-			'ingredient' => 'Ingredient',
+			'quantity1' => 'Quantity',
+			'quantity2' => 'Quantity',
+			'quantity3' => 'Quantity',
+			'quantity4' => 'Quantity',
+			'quantity5' => 'Quantity',
+			'name' => 'Name',
 			'recipe_id' => 'Recipe',
 			'section_id' => 'Section',
 		);
@@ -89,8 +97,12 @@ class Ingredient extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('quantity',$this->quantity,true);
-		$criteria->compare('ingredient',$this->ingredient,true);
+		$criteria->compare('quantity1',$this->quantity1,true);
+		$criteria->compare('quantity2',$this->quantity2,true);
+		$criteria->compare('quantity3',$this->quantity3,true);
+		$criteria->compare('quantity4',$this->quantity4,true);
+		$criteria->compare('quantity5',$this->quantity5,true);
+		$criteria->compare('name',$this->name,true);
 		$criteria->compare('recipe_id',$this->recipe_id);
 
 		return new CActiveDataProvider($this, array(

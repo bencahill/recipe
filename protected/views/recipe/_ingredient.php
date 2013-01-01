@@ -1,11 +1,27 @@
 <div class="view">
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('quantity')); ?>:</b>
-	<?php echo CHtml::encode($data->quantity); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('name')); ?>:</b>
+	<?php echo CHtml::encode($data->ingredient); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('ingredient')); ?>:</b>
-	<?php echo CHtml::encode($data->ingredient); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('quantity1')); ?>:</b>
+	<?php echo CHtml::encode($data->quantity1); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('quantity2')); ?>:</b>
+	<?php echo CHtml::encode($data->quantity2); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('quantity3')); ?>:</b>
+	<?php echo CHtml::encode($data->quantity3); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('quantity4')); ?>:</b>
+	<?php echo CHtml::encode($data->quantity4); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('quantity5')); ?>:</b>
+	<?php echo CHtml::encode($data->quantity5); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('section_id')); ?>:</b>

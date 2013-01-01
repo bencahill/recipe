@@ -20,8 +20,28 @@
 	<?php echo CHtml::encode($data->source); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('yield')); ?>:</b>
-	<?php echo CHtml::encode($data->yield); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('columns')); ?>:</b>
+	<?php echo CHtml::encode($data->columns); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('yield1')); ?>:</b>
+	<?php echo CHtml::encode($data->yield1); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('yield2')); ?>:</b>
+	<?php echo CHtml::encode($data->yield2); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('yield3')); ?>:</b>
+	<?php echo CHtml::encode($data->yield3); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('yield4')); ?>:</b>
+	<?php echo CHtml::encode($data->yield4); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('yield5')); ?>:</b>
+	<?php echo CHtml::encode($data->yield5); ?>
 	<br />
 
 	<?php /*
