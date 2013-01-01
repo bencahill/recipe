@@ -185,7 +185,7 @@ $(function() {
 		if(event.which == 13) {
 			event.preventDefault();
 			var $this = $(this);
-			var $inputs = $('input,textarea');
+			var $inputs = $('input,textarea').filter(':visible');
 			var index = $inputs.index($this);
 			var next = $inputs.get((index+1));
 			$this.blur();
