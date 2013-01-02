@@ -137,5 +137,8 @@ $(function() {
 			$this.clone().insertAfter($this);
 		}
 	});
+<?php if( $model->columns <= 3 ): ?>
+	$('#ingredientView th:nth-child(2), #ingredientView td:nth-child(2), #ingredientView th:nth-child(3), #ingredientView td:nth-child(3), #ingredientView th:nth-child(4), #ingredientView td:nth-child(4), #ingredientView th:nth-child(5), #ingredientView td:nth-child(5), #ingredientView th:nth-child(6), #ingredientView td:nth-child(6)').width('15%');
+<?php endif; ?>
 });
 </script>
