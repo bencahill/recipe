@@ -50,3 +50,4 @@ td.mmf_cell{ padding:0px; }
 #ingredientView td{ padding-left:16px; text-indent:-10px; }
 h1 a{ color:black; }
 h1 a:hover{ text-decoration:none; }
+#Recipe_description{ width:auto }

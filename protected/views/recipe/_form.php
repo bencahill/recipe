@@ -20,7 +20,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	echo $form->errorSummary(array_merge(array($model),$validatedIngredients));
 ?>
 	<?php echo $form->textFieldRow($model,'title'); ?>
-	<?php echo $form->textAreaRow($model,'description'); ?>
+	<?php echo $form->textAreaRow($model,'description',array('rows'=>6,'cols'=>50)); ?>
 	<?php echo $form->dropDownListRow($model,'columns',array(1=>1,2=>2,3=>3,4=>4,5=>5)); ?>
 
 	<table class="yields mmf_table" style="display:none;">
