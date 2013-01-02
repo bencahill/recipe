@@ -147,9 +147,13 @@ class Recipe extends CActiveRecord
 
 	public function defaultScope()
 	{         
-		return array(
-			'condition'=>'author_id='.Yii::app()->user->id,         
-		);     
+		if( ! Yii::app()->user->isGuest ) {
+			return array(
+				'condition'=>'author_id='.Yii::app()->user->id,
+			);
+		} else {
+			return array();
+		}
 	}
 
 	protected function beforeSave()
