@@ -113,17 +113,29 @@ $this->widget('ext.groupgridview.BootGroupGridView', array(
 	'columns'=>$yieldIngredients,
 ));
 
+$bottomList = array();
+if( !empty($model->notes) ) {
+	$bottomList[] = 'notes:html';
+}
+if( !empty($model->source) ) {
+	$bottomList[] = 'source';
+}
+
 $this->widget('bootstrap.widgets.TbDetailView', array(
 	'data'=>$model,
-	'attributes'=>array(
-		'notes:html',
-		'source',
-		'columns',
-		'category_id',
-	),
+	'attributes'=>$bottomList,
 ));
 ?>
 
 <script type="text/javascript">
-$('.yields').prependTo('#ingredientView thead');
+$(function() {
+	$('.yields').prependTo('#ingredientView thead');
+	$('.extrarow').each(function() {
+		$this = $(this);
+		$this.attr('colspan','');
+		for (var i=1; i<<?php echo ($model->columns + 2); ?>; i++) {
+			$this.clone().insertAfter($this);
+		}
+	});
+});
 </script>

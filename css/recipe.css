@@ -16,8 +16,7 @@ td.mmf_cell{ padding:0px; }
 .instructions.right{ width:45%; float:right; padding:20px 15px 15px; }
 .instructions.right.first{ padding-top:40px; }
 #ingredientView td:first-child:first-letter{ text-transform:uppercase; }
-#ingredientView td{ padding:2px; }
-#ingredientView th{ padding:8px 2px; }
+#ingredientView td, #ingredientView th{ padding:2px 2px 2px 6px; }
 
 #ingredientView table, #ingredientView tbody, #ingredientView tr, #ingredientView td{ vertical-align:top !important; border:0; background:transparent; }
 .mmf_table th:first-child, .mmf_table td:first-child,
@@ -36,7 +35,16 @@ td.mmf_cell{ padding:0px; }
 #ingredientView th:last-child, #ingredientView td:last-child{ width:auto !important; }
 #ingredientView tbody tr:first-child{ display:none; }
 #ingredientView thead td p{ font-size:.75em; margin:0; }
-#ingredientView td.extrarow{ text-indent:-9999px; border-bottom:1px solid #CCC; }
+#ingredientView td.extrarow{ text-indent:-9999px; border-bottom:1px solid #CCC; line-height:0 !important; }
 
 #indexView h3{ margin-bottom:0; line-height:32px; }
 #indexView h3 a{ color:black; }
+
+#ingredientView td h5{ margin:0; }
+#ingredientView tbody{ border-top:2px solid black; }
+#ingredientView th, #ingredientView tbody td{ border-right:1px solid lightgrey; }
+#ingredientView th:first-child, #ingredientView tbody td:first-child{ border-right:2px solid black; }
+#ingredientView th:last-child, #ingredientView tbody td.merge{ border-right:none; }
+#yw1 th, #yw1 td{ border-top:none; }
+#ingredientView td p:last-child{ margin-bottom:0; }
+#ingredientView td{ padding-left:16px; text-indent:-10px; }

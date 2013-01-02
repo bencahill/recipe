@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/styles.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/recipe.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/print.css" media="print" />
 
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
