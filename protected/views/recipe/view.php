@@ -1,8 +1,11 @@
 <?php
-$this->breadcrumbs=array(
-	'Recipes'=>array('index'),
-	$model->title,
-);
+$breadcrumbs = array();
+if( ! Yii::app()->user->isGuest ) {
+	$breadcrumbs['Recipes'] = array('index');
+}
+$breadcrumbs[] = $model->title;
+
+$this->breadcrumbs=$breadcrumbs;
 
 $this->menu=array(
 	array('label'=>'Update Recipe', 'url'=>array('update', 'id'=>$model->id)),

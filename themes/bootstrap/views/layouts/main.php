@@ -16,16 +16,20 @@
 
 <body>
 
-<?php $this->widget('bootstrap.widgets.TbNavbar',array(
+<?php
+$menuItems = array();
+if( ! Yii::app()->user->isGuest ) {
+	$menuItems[] = array('label'=>'Recipes', 'url'=>array('/recipe/index'));
+    $menuItems[] = array('label'=>'Create Recipe', 'url'=>array('/recipe/create'));
+}
+$menuItems[] = array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest);
+$menuItems[] = array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest);
+
+$this->widget('bootstrap.widgets.TbNavbar',array(
     'items'=>array(
         array(
             'class'=>'bootstrap.widgets.TbMenu',
-            'items'=>array(
-                array('label'=>'Recipes', 'url'=>array('/recipe/index')),
-                array('label'=>'Create Recipe', 'url'=>array('/recipe/create')),
-                array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-                array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
-            ),
+            'items'=>$menuItems,
         ),
     ),
 )); ?>
