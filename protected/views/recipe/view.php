@@ -11,7 +11,7 @@ $this->menu=array(
 );
 ?>
 
-<h1><?php echo $model->title; ?></h1>
+<h1><?php echo CHtml::link(CHtml::encode($model->title), array('view', 'id'=>$model->id)); ?></h1>
 
 <?php
 $sections = array();

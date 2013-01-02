@@ -25,12 +25,11 @@ blockquote {margin:1.5em;padding:1em;font-style:italic;font-size:.9em;}
 .large {font-size:1.1em;}
 .quiet {color:#999;}
 .hide {display:none;}
-a:link, a:visited {background:transparent;font-weight:700;text-decoration:underline;}
-a:link:after, a:visited:after {content:" (" attr(href) ")";font-size:90%;}
 
 .navbar, .breadcrumbs, #sidebar{ display:none; }
 .table th, .table td{ line-height:14px !important; }
 .table td p{ margin-bottom:4px; }
 #yw0{ margin:0; }
 #page, #ingredientView{ padding-top:0; }
-h1{ font-size:30px !important; }
+h1 a{ font-size:30px !important; }
+h1 a:after{ content:"" !important; }

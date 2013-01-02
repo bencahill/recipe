@@ -48,3 +48,5 @@ td.mmf_cell{ padding:0px; }
 #yw1 th, #yw1 td{ border-top:none; }
 #ingredientView td p:last-child{ margin-bottom:0; }
 #ingredientView td{ padding-left:16px; text-indent:-10px; }
+h1 a{ color:black; }
+h1 a:hover{ text-decoration:none; }
