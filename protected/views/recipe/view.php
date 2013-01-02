@@ -34,11 +34,11 @@ else {
 }
 
 $yields = '<table style="display:none"><tr class="yields"><td></td>';
-$yieldIngredients = array( array('name'=>'Name', 'value'=>'$data->name') );
+$yieldIngredients = array( array('name'=>'Name', 'value'=>'$data["name"]') );
 for( $i = 1; $i <= 5; $i++ ) {
 	if( !empty( $model->{'yield'.$i} ) ) {
 		$yields .= "<td><p>Yield</p>".nl2br($model->{'yield'.$i})."</td>";
-		$yieldIngredients[] = array('name'=>'Quantity', 'value'=>'$data->quantity'.$i);
+		$yieldIngredients[] = array('name'=>'Quantity', 'value'=>'$data["quantity'.$i.'"]');
 	}
 }
 $yields .= '<td></td></tr></table>';
@@ -46,7 +46,7 @@ $yieldIngredients[] = array(
 	'name'=>'Instructions',
 	'type'=>'raw',
 	'value'=>function($data) use ($sections) {
-		return $sections[$data->section_id];
+		return $sections[$data["section_id"]];
 	}
 );
 
@@ -75,7 +75,26 @@ $this->widget('bootstrap.widgets.TbDetailView', array(
 	'attributes'=>$topView,
 ));
 
-$rawData = $model->getRelated('ingredients',false);
+$id = $model->id;
+$command=Yii::app()->db->createCommand('SELECT * FROM tbl_ingredient WHERE recipe_id=?');
+$command->bindParam(1,$id);
+$command->execute();
+$rawData=$command->queryAll();
+$lastIngredient = array_slice($rawData, -1, 1);
+$modelSectionCount = ( count($model->sections) - 1 );
+if( $lastIngredient[0]['section_id'] < $modelSectionCount ) {
+	$rawData[] = array(
+		'id'=>0,
+		'section_id'=>$modelSectionCount,
+		'position'=>9999999,
+		'name'=>'',
+		'quantity1'=>'',
+		'quantity2'=>'',
+		'quantity3'=>'',
+		'quantity4'=>'',
+		'quantity5'=>'',
+	);
+}
 
 $dataProvider = new CArrayDataProvider($rawData, array(
 	'sort'=>array(
