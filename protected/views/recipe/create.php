@@ -5,8 +5,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Recipe', 'url'=>array('index')),
-	array('label'=>'Manage Recipe', 'url'=>array('admin')),
+	array('label'=>'Manage Recipes', 'url'=>array('admin')),
 );
 
 global $sections;

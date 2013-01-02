@@ -4,62 +4,51 @@
     Yii::app()->baseUrl.'/js/sections.js'
 ); ?>
 
-<?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'recipe-form',
-	'enableAjaxValidation'=>false,
+<?php /** @var BootActiveForm $form */
+$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+    'id'=>'horizontalForm',
+    'type'=>'vertical',
 )); ?>
 
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
+
+<fieldset>
 
 <?php
 	//show errorsummary at the top for all models
 	//build an array of all models to check
 	echo $form->errorSummary(array_merge(array($model),$validatedIngredients));
 ?>
-	<div class="row">
-		<?php echo $form->labelEx($model,'title'); ?>
-		<?php echo $form->textField($model,'title'); ?>
-		<?php echo $form->error($model,'title'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'description'); ?>
-		<?php echo $form->textArea($model,'description',array('rows'=>6, 'cols'=>50)); ?>
-		<?php echo $form->error($model,'description'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'columns'); ?>
-		<?php echo $form->dropDownList($model,'columns',array(1=>1,2=>2,3=>3,4=>4,5=>5)); ?>
-		<?php echo $form->error($model,'columns'); ?>
-	</div>
+	<?php echo $form->textFieldRow($model,'title'); ?>
+	<?php echo $form->textAreaRow($model,'description'); ?>
+	<?php echo $form->dropDownListRow($model,'columns',array(1=>1,2=>2,3=>3,4=>4,5=>5)); ?>
 
 	<table class="yields mmf_table" style="display:none;">
 		<tr>
 			<td class="mmf_cell"></td>
 			<td class="mmf_cell">
 				<?php echo $form->labelEx($model,'yield1'); ?>
-				<?php echo $form->textArea($model,'yield1',array('rows'=>2, 'cols'=>10)); ?>
+				<?php echo $form->textArea($model,'yield1',array('rows'=>2, 'cols'=>13)); ?>
 				<?php echo $form->error($model,'yield1'); ?>
 			</td>
 			<td class="mmf_cell">
 				<?php echo $form->labelEx($model,'yield2'); ?>
-				<?php echo $form->textArea($model,'yield2',array('rows'=>2, 'cols'=>10)); ?>
+				<?php echo $form->textArea($model,'yield2',array('rows'=>2, 'cols'=>13)); ?>
 				<?php echo $form->error($model,'yield2'); ?>
 			</td>
 			<td class="mmf_cell">
 				<?php echo $form->labelEx($model,'yield3'); ?>
-				<?php echo $form->textArea($model,'yield3',array('rows'=>2, 'cols'=>10)); ?>
+				<?php echo $form->textArea($model,'yield3',array('rows'=>2, 'cols'=>13)); ?>
 				<?php echo $form->error($model,'yield3'); ?>
 			</td>
 			<td class="mmf_cell">
 				<?php echo $form->labelEx($model,'yield4'); ?>
-				<?php echo $form->textArea($model,'yield4',array('rows'=>2, 'cols'=>10)); ?>
+				<?php echo $form->textArea($model,'yield4',array('rows'=>2, 'cols'=>13)); ?>
 				<?php echo $form->error($model,'yield4'); ?>
 			</td>
 			<td class="mmf_cell">
 				<?php echo $form->labelEx($model,'yield5'); ?>
-				<?php echo $form->textArea($model,'yield5',array('rows'=>2, 'cols'=>10)); ?>
+				<?php echo $form->textArea($model,'yield5',array('rows'=>2, 'cols'=>13)); ?>
 				<?php echo $form->error($model,'yield5'); ?>
 			</td>
 			<td class="mmf_cell"></td>
@@ -202,7 +191,6 @@ $(function() {
 	$('#Recipe_columns').change(function() {
 		updateColumns();
 	});
-	$(".mmf_table.yields").width($('.mmf_table:not(.yields) thead').width());
 	var a = function() {
 		var b = $(window).scrollTop();
 		var s = $("#scrollanchor");
@@ -210,20 +198,25 @@ $(function() {
 		var e = $(".section").last().offset().top;
 		var c=$(".mmf_table.yields");
 		if (b>d && b<e) {
-			c.css({position:"fixed",top:"0px"});
+			c.css({position:"fixed",top:$('.navbar').outerHeight()+"px"});
 			s.height(c.outerHeight());
 		} else {
 			c.css({position:"relative",top:""});
 			s.height(0);
 		}
 	};
-	$(window).scroll(a);a()
+	$(window).scroll(a);a();
+	$('#Recipe_title').bind('input', function() {
+		$('h1 em').text($('#Recipe_title').val());
+	});
 });
 </script>
 
 <a id="id_section" href="#" tabindex="-1">Add section</a>
 
-	<div class="row">
+<label for="Recipe_notes">
+Notes
+</label>
 <?php
 $this->widget('ext.editMe.widgets.ExtEditMe', array(
 	'model'=>$model,
@@ -234,29 +227,16 @@ $this->widget('ext.editMe.widgets.ExtEditMe', array(
 	),
 ));
 ?>
-	</div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'number_instructions'); ?>
-		<?php echo $form->checkBox($model,'number_instructions',array('value'=>'1','uncheckValue'=>0)); ?>
-		<?php echo $form->error($model,'number_instructions'); ?>
-	</div>
+	<?php echo $form->checkBoxRow($model,'number_instructions',array('value'=>1,'uncheckValue'=>0)); ?>
+	<?php echo $form->textFieldRow($model,'source'); ?>
+	<?php echo $form->textFieldRow($model,'category_id'); ?>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'source'); ?>
-		<?php echo $form->textField($model,'source'); ?>
-		<?php echo $form->error($model,'source'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'category_id'); ?>
-		<?php echo $form->textField($model,'category_id'); ?>
-		<?php echo $form->error($model,'category_id'); ?>
-	</div>
-
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
-	</div>
+</fieldset>
+ 
+<div class="form-actions">
+	<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'type'=>'primary', 'label'=>'Submit')); ?>
+</div>
 
 <?php $this->endWidget(); ?>
 

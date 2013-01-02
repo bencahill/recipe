@@ -6,10 +6,8 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Recipe', 'url'=>array('index')),
-	array('label'=>'Create Recipe', 'url'=>array('create')),
 	array('label'=>'View Recipe', 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>'Manage Recipe', 'url'=>array('admin')),
+	array('label'=>'Manage Recipes', 'url'=>array('admin')),
 );
 ?>
 
@@ -22,7 +20,7 @@ if( empty($_POST['Recipe']) ) {
 }
 ?>
 
-<h1>Update Recipe <?php echo $model->id; ?></h1>
+<h1>Update <em><?php echo $model->title; ?></em></h1>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model,
 								'ingredient'=>$ingredient,'validatedIngredients'=>$validatedIngredients)); ?>

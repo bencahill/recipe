@@ -36,4 +36,5 @@ function updateColumns() {
 		$this.find('th:not(:nth-of-type(7)):gt('+columns+')').hide();
 		$this.find('td:last').css('width',((6-columns)*12)+'%');
 	});
+	$(".mmf_table.yields").width($('.mmf_table:not(.yields) thead').width());
 }

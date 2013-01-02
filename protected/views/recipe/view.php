@@ -5,11 +5,9 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Recipe', 'url'=>array('index')),
-	array('label'=>'Create Recipe', 'url'=>array('create')),
 	array('label'=>'Update Recipe', 'url'=>array('update', 'id'=>$model->id)),
 	array('label'=>'Delete Recipe', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage Recipe', 'url'=>array('admin')),
+	array('label'=>'Manage Recipes', 'url'=>array('admin')),
 );
 ?>
 
@@ -17,6 +15,15 @@ $this->menu=array(
 
 <?php
 $sections = array();
+global $instructionCount;
+$instructionCount = 1;
+function numberInstructions($matches) {
+	global $instructionCount;
+	$withCount = $matches[1].$instructionCount.'. ';
+	$instructionCount++;
+	return $withCount;
+}
+
 if( $model->number_instructions ) {
 	foreach( $model->sections as $section ) {
 		$sections[] = preg_replace_callback("|(<p>)|","numberInstructions",$section);
@@ -30,14 +37,11 @@ $yields = '<table style="display:none"><tr class="yields"><td></td>';
 $yieldIngredients = array( array('name'=>'Name', 'value'=>'$data->name') );
 for( $i = 1; $i <= 5; $i++ ) {
 	if( !empty( $model->{'yield'.$i} ) ) {
-		$yields .= "<td><p>Yield</p>{$model->{'yield'.$i}}</td>";
+		$yields .= "<td><p>Yield</p>".nl2br($model->{'yield'.$i})."</td>";
 		$yieldIngredients[] = array('name'=>'Quantity', 'value'=>'$data->quantity'.$i);
 	}
 }
 $yields .= '<td></td></tr></table>';
-if( empty( $model->yield2 ) ) {
-	$yields = "<p>Yield: $model->yield1</p>";
-}
 $yieldIngredients[] = array(
 	'name'=>'Instructions',
 	'type'=>'raw',
@@ -46,16 +50,30 @@ $yieldIngredients[] = array(
 	}
 );
 
-echo $yields;
+$topView = array();
 
-global $instructionCount;
-$instructionCount = 1;
-function numberInstructions($matches) {
-	global $instructionCount;
-	$withCount = $matches[1].$instructionCount.'. ';
-	$instructionCount++;
-	return $withCount;
+if( empty( $model->yield2 ) ) {
+	$topView[] = array(
+		'name'=>'yield',
+		'value'=>nl2br($model->yield1),
+		'type'=>'raw',
+	);
+} else {
+	echo $yields;
 }
+
+if( !empty( $model->description) ) {
+	$topView[] = array(
+		'name'=>'description',
+		'value'=>nl2br($model->description),
+		'type'=>'raw',
+	);
+}
+
+$this->widget('bootstrap.widgets.TbDetailView', array(
+	'data'=>$model,
+	'attributes'=>$topView,
+));
 
 $rawData = $model->getRelated('ingredients',false);
 
@@ -66,19 +84,19 @@ $dataProvider = new CArrayDataProvider($rawData, array(
 	'pagination'=>false,
 ));
 
-$this->widget('ext.groupgridview.GroupGridView', array(
+$this->widget('ext.groupgridview.BootGroupGridView', array(
 	'id'=>'ingredientView',
 	'dataProvider'=>$dataProvider,
 	'summaryText'=>'',
+	'mergeCellCss'=>'vertical-align:middle;',
 	'mergeColumns'=>array('Instructions'),
 	'extraRowColumns'=>array('section_id'),
 	'columns'=>$yieldIngredients,
 ));
 
-$this->widget('zii.widgets.CDetailView', array(
+$this->widget('bootstrap.widgets.TbDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
-		'description',
 		'notes:html',
 		'source',
 		'columns',

@@ -4,14 +4,14 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Create Recipe', 'url'=>array('create')),
-	array('label'=>'Manage Recipe', 'url'=>array('admin')),
+	array('label'=>'Manage Recipes', 'url'=>array('admin')),
 );
 ?>
 
 <h1>Recipes</h1>
 
-<?php $this->widget('zii.widgets.CListView', array(
+<?php $this->widget('bootstrap.widgets.TbListView', array(
+	'id'=>'indexView',
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_view',
 )); ?>
