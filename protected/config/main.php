@@ -43,6 +43,10 @@ return array(
             'showScriptName'=>false,
             'caseSensitive'=>false,
 			'rules'=>array(
+				''=>'recipe/index',
+				'<id:\d+>'=>'recipe/view',
+				'create'=>'recipe/create',
+				'update/<id:\d+>'=>'recipe/update',
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
