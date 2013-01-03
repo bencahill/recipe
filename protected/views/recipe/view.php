@@ -38,9 +38,11 @@ else {
 	$sections = $model->sections;
 }
 
-$yields = '<table style="display:none"><tr class="yields"><td></td>';
-$yieldIngredients = array( array('name'=>'Name', 'value'=>'$data["name"]') );
-for( $i = 1; $i <= 5; $i++ ) {
+$yields = '<table style="display:none"><tr class="yields"><td></td><td><p>Yield</p>'.nl2br($model->yield1).'</td>';
+$yieldIngredients = array( array('name'=>'Name', 'value'=>'$data["name"]'),
+	array('name'=>'Quantity', 'value'=>'$data["quantity1"]'),
+);
+for( $i = 2; $i <= 5; $i++ ) {
 	if( !empty( $model->{'yield'.$i} ) ) {
 		$yields .= "<td><p>Yield</p>".nl2br($model->{'yield'.$i})."</td>";
 		$yieldIngredients[] = array('name'=>'Quantity', 'value'=>'$data["quantity'.$i.'"]');
@@ -58,11 +60,13 @@ $yieldIngredients[] = array(
 $topView = array();
 
 if( empty( $model->yield2 ) ) {
-	$topView[] = array(
-		'name'=>'yield',
-		'value'=>nl2br($model->yield1),
-		'type'=>'raw',
-	);
+	if( !empty( $model->yield1 ) ) {
+		$topView[] = array(
+			'name'=>'yield',
+			'value'=>nl2br($model->yield1),
+			'type'=>'raw',
+		);
+	}
 } else {
 	echo $yields;
 }
