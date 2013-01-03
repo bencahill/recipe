@@ -230,6 +230,7 @@ $(function() {
 		$('h1 em').text($('#Recipe_title').val());
 	});
 	$('#id_ingredient').attr('tabindex',-1);
+	$('#Recipe_title').focus();
 });
 </script>
 
