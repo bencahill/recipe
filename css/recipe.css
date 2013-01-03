@@ -37,8 +37,8 @@ td.mmf_cell{ padding:0px; }
 #ingredientView thead td p{ font-size:.75em; margin:0; }
 #ingredientView td.extrarow{ text-indent:-9999px; border-bottom:1px solid #CCC; line-height:0 !important; }
 
-#indexView h3{ margin-bottom:0; line-height:32px; }
-#indexView h3 a{ color:black; }
+#indexView h4{ margin:25px 0 0; line-height:16px; }
+#indexView h4 a{ color:black; }
 
 #ingredientView td h5{ margin:0; }
 #ingredientView tbody{ border-top:2px solid black; }
