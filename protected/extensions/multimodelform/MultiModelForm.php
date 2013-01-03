@@ -12,7 +12,7 @@
  * @copyright 2011 myticket it-solutions gmbh
  * @license New BSD License
  * @category User Interface
- * @version 3.0
+ * @version 4.1
  */
 class MultiModelForm extends CWidget
 {
@@ -71,11 +71,38 @@ class MultiModelForm extends CWidget
     public $addItemText = 'Add item';
 
     /**
+     * Show the add item link as button
+     *
+     * @var boolean $addItemAsButton
+     */
+    public $addItemAsButton = false;
+
+    /**
+     * Alert text if options['limit']>0 and the limit is reached
+     * See the options property below
+     * @var string
+     */
+    public $limitText = 'The limit is reached';
+
+    /**
      * Show 'Add item' link and empty item in errormode
      *
      * @var boolean $allowAddOnError
      */
     public $showAddItemOnError = true;
+
+
+    /**
+     * If false, the addItem link and empty row will not be displayed
+     * @var bool
+     */
+    public $allowAddItem = true;
+
+    /**
+     * If false, the removeItem will not be displayed
+     * @var bool
+     */
+    public $allowRemoveItem = true;
 
     /**
      * The text for the remove link
@@ -99,9 +126,7 @@ class MultiModelForm extends CWidget
      *
      * @var array $removeHtmlOptions
      */
-    public $removeHtmlOptions = array(
-        'tabindex' => -1
-	);
+    public $removeHtmlOptions = array();
 
     /**
      * Show elements as table
@@ -146,20 +171,13 @@ class MultiModelForm extends CWidget
     public $sortOptions = array(
         'placeholder' => 'ui-state-highlight',
         'opacity' => 0.8,
-        'cursor' => 'move',
-		'items' => '.mmf_row:not(:last)',
-		'start' => 'js:function( event, ui) {
-			$(ui.item).find("textarea").each(function() {
-				$(this).ckeditorGet().destroy();
-			});
-			ui.placeholder.height(ui.item.height());
-		}',
-		'stop' => 'js:function( event, ui) {
-			sectionCalc();
-			$(ui.item).find("textarea").ckeditor({"toolbar":[["Bold","Italic","Underline","Strike","Subscript","Superscript","-","RemoveFormat"],["NumberedList","BulletedList","-","Outdent","Indent","-","SpellChecker","Scayt","-","Format"]],"forcePasteAsPlainText":true,"extraPlugins":"","removeDialogTabs":"","contentsCss":["/assets/e07a29c9/contents.css"],"resize_enabled":true,"resize_dir":"both","autoGrow_onStartup":false,"language":"","baseHref":"","bodyClass":"","bodyId":"","docType":"","filebrowserBrowseUrl":"","filebrowserFlashBrowseUrl":"","filebrowserImageBrowseUrl":"","filebrowserFlashUploadUrl":"","filebrowserUploadUrl":"","filebrowserImageBrowseLinkUrl":"","filebrowserImageUploadUrl":"","fullPage":false,"height":200,"width":"","uiColor":"","disableNativeSpellChecker":false,"autoUpdateElement":true});
-		}',
-
+        'cursor' => 'move'
     );
+    /**
+     * Render elements in bootstrap layout
+     * @var bool
+     */
+    public $bootstrapLayout = false;
 
     /**
      * The wrapper for each fieldset
@@ -190,6 +208,20 @@ class MultiModelForm extends CWidget
         'tag' => 'span',
         'htmlOptions' => array(),
     );
+
+
+    /**
+     * Hide the empty copyTemplate, show on Add Item click
+     *
+     * @var bool
+     */
+    public $hideCopyTemplate = true;
+
+    /**
+     * Set a limit on adding items
+     * @var int
+     */
+    public $limit = 0;
 
     /**
      * The javascript code jsBeforeClone,jsAfterClone ...
@@ -227,6 +259,12 @@ class MultiModelForm extends CWidget
      * @var string $_assets
      */
     private $_assets;
+
+    /**
+     * Internal record count
+     * @var integer
+     */
+    private $_recordCount;
 
     /**
      * Support for CJuiDatePicker
@@ -316,8 +354,8 @@ class MultiModelForm extends CWidget
         if (!isset($formData))
             $formData = $_POST;
 
-        // $sortAttribute = !empty($formData[self::CLASSPREFIX . 'sortAttribute']) ? $formData[self::CLASSPREFIX . 'sortAttribute'] : null;
-        // $sortIndex = 0;
+        $sortAttribute = !empty($formData[self::CLASSPREFIX . 'sortAttribute']) ? $formData[self::CLASSPREFIX . 'sortAttribute'] : null;
+        $sortIndex = 0;
 
         if ($doValidate)
         {
@@ -336,11 +374,11 @@ class MultiModelForm extends CWidget
                 }
 
                 //if sortable, assign the sortAttribute
-                // if (!empty($sortAttribute))
-                // {
-                    // $sortIndex++;
-                    // $item->$sortAttribute = $sortIndex;
-                // }
+                if (!empty($sortAttribute))
+                {
+                    $sortIndex++;
+                    $item->$sortAttribute = $sortIndex;
+                }
 
                 if (!$item->save())
                     return false;
@@ -613,22 +651,43 @@ class MultiModelForm extends CWidget
         }
     }
 
+
+    /**
+     * @since 3.2
+     * @return string
+     */
+    public function getCopyFieldsetId()
+    {
+        return $this->id .'_copytemplate';
+    }
+
     /**
      * The link for removing a fieldset
      *
      * @return string
      */
-    public function getRemoveLink()
+    public function getRemoveLink($isCopyTemplate=false)
     {
-        if (empty($this->removeText))
+        if($isCopyTemplate && !$this->hideCopyTemplate)
             return '';
 
-        $onClick = '$(this).parent().parent().remove(); return false;';
+        if (empty($this->removeText) || !$this->allowRemoveItem) //added v3.1
+            return '';
+
+        $onClick = '$(this).parent().parent().remove(); mmfRecordCount--; return false;';
+
+        if($isCopyTemplate && $this->hideCopyTemplate)
+        {
+            $copyId = $this->getCopyFieldsetId();
+            $onClick = 'if($(this).parent().parent().attr("id")=="'.$copyId.'") {clearAllInputs($("#'.$copyId.'"));$(this).parent().parent().hide()} else ' . $onClick;
+        }
 
         if (!empty($this->removeConfirm))
             $onClick = "if(confirm('{$this->removeConfirm}')) " . $onClick;
 
         $htmlOptions = array_merge($this->removeHtmlOptions, array('onclick' => $onClick));
+        $htmlOptions['class'] = isset($htmlOptions['class']) ? $htmlOptions['class'].' '.self::CLASSPREFIX.'removelink' : self::CLASSPREFIX.'removelink';
+
         $link = CHtml::link($this->removeText, '#', $htmlOptions);
 
         return CHtml::tag($this->removeLinkWrapper['tag'],
@@ -644,7 +703,7 @@ class MultiModelForm extends CWidget
      */
     public function isSortable()
     {
-        return !empty($this->sortAttribute); // && !$this->tableView;
+        return !empty($this->sortAttribute) && !$this->tableView;
     }
 
     /**
@@ -652,12 +711,28 @@ class MultiModelForm extends CWidget
      */
     public function init()
     {
+        $this->removeLinkWrapper['htmlOptions']['class'] = !empty($this->removeLinkWrapper['htmlOptions']['class']) ?
+            $this->removeLinkWrapper['htmlOptions']['class'] .' '.self::CLASSPREFIX.'removelink' :
+            self::CLASSPREFIX.'removelink';
+
         if ($this->tableView)
         {
             $this->fieldsetWrapper = array('tag' => 'tr', 'htmlOptions' => array('class' => self::CLASSPREFIX . 'row'));
             $this->rowWrapper = array('tag' => 'td', 'htmlOptions' => array('class' => self::CLASSPREFIX . 'cell'));
             $this->removeLinkWrapper = $this->rowWrapper;
+            if($this->bootstrapLayout)
+            {
+               if(!isset($this->tableHtmlOptions['class']))
+                   $this->tableHtmlOptions['class'] = 'table '.self::CLASSPREFIX . 'table';
         }
+        }
+        else
+        if ($this->bootstrapLayout)
+        {
+            $this->rowWrapper = array('tag' => 'div', 'htmlOptions' => array('class' => 'control-group '.self::CLASSPREFIX.'row'));
+        }
+
+        $this->_recordCount = 0;
 
         $this->checkModel();
         $this->registerClientScript();
@@ -696,7 +771,7 @@ class MultiModelForm extends CWidget
         if (empty($this->options))
             $this->options = array();
 
-        if (!empty($this->removeText))
+        if (!empty($this->removeText) && !$this->hideCopyTemplate)
         {
             $append = $this->getRemoveLink();
             $this->options['append'] = empty($this->options['append']) ? $append : $append . ' ' . $this->options['append'];
@@ -714,6 +789,8 @@ class MultiModelForm extends CWidget
         if (!empty($this->jsAfterNewId))
             $this->options['afterNewId'] = $this->jsAfterNewId;
 
+        $this->options['limitText'] = $this->limitText;
+
         return CJavaScript::encode($this->options);
 
     }
@@ -728,6 +805,7 @@ class MultiModelForm extends CWidget
         return self::CLASSPREFIX . 'sortable';
     }
 
+
     /**
      * Registers the relcopy javascript file.
      */
@@ -738,7 +816,7 @@ class MultiModelForm extends CWidget
         $this->_assets = Yii::app()->assetManager->publish(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'assets');
 
         $cs->registerCoreScript('jquery');
-        $cs->registerScriptFile($this->_assets . '/js/jquery.relcopy.yii.1.0.js');
+        $cs->registerScriptFile($this->_assets . '/js/jquery.relcopy.yii.4.0.js');
 
         $options = $this->getClientOptions();
         $cs->registerScript(__CLASS__ . '#' . $this->id, "jQuery('#{$this->id}').relCopy($options);");
@@ -796,6 +874,17 @@ class MultiModelForm extends CWidget
         echo CHtml::tag('tbody', $tbodyOptions, false, false);
     }
 
+    /**
+     * Check if limit is set and reached
+     * @return bool
+     */
+    public function limitReached()
+    {
+        $limit = !empty($this->options['limit']) ? $this->options['limit'] : 0;
+
+        return $limit>0 ? ($limit - $this->_recordCount) <= 0 : false;
+    }
+
 
     /**
      * Renders the active form if a model and formConfig is set
@@ -808,7 +897,7 @@ class MultiModelForm extends CWidget
 
         //form is displayed again with some invalid models
         $isErrorMode = !empty($this->validatedItems);
-        $showAddLink = !$isErrorMode || ($isErrorMode && $this->showAddItemOnError);
+        $showAddLink = $this->allowAddItem && (!$isErrorMode || ($isErrorMode && $this->showAddItemOnError));
 
         $this->formConfig['activeForm'] = array('class' => 'MultiModelEmbeddedForm');
 
@@ -843,6 +932,8 @@ class MultiModelForm extends CWidget
         // existing records
         if (is_array($data) && !empty($data))
         {
+            $this->_recordCount = count($data);
+
             foreach ($data as $model)
             {
                 $form = new MultiModelRenderForm($this->formConfig, $model);
@@ -884,6 +975,8 @@ class MultiModelForm extends CWidget
             echo $form->render();
         }
 
+        echo CHtml::script('mmfRecordCount='.$this->_recordCount);
+
         if ($this->tableView)
         {
             echo CHtml::closeTag('tbody');
@@ -903,7 +996,55 @@ class MultiModelRenderForm extends CForm
     public $index;
     public $isCopyTemplate;
     public $primaryKey;
+    /**
+     * Modified for bootstrapLayout
+     */
+    public function renderButtons()
+    {
+        if($this->parentWidget->bootstrapLayout)
+        {
+            $output='';
+            foreach($this->getButtons() as $button)
+                $output.=$this->renderElement($button);
+            return $output!=='' ? "<div class=\"form-actions\">".$output."</div>\n" : '';
+        }
+        else
+            parent::renderButtons();
+    }
 
+    /**
+     * Modified for bootstrapLayout
+     */
+    public function renderElement($element)
+    {
+        if($this->parentWidget->bootstrapLayout) //begin bootstrapLayout
+        {
+            if(is_string($element))
+            {
+                if(($e=$this[$element])===null && ($e=$this->getButtons()->itemAt($element))===null)
+                    return $element;
+                else
+                    $element=$e;
+            }
+            if($element->getVisible())
+            {
+                if($element instanceof CFormInputElement)
+                {
+                    if($element->type==='hidden')
+                        return "<div style=\"display:none\">\n".$element->render()."</div>\n";
+                    else
+                        return "<div class=\"controls field_{$element->name}\">\n".$element->render()."</div>\n";
+                }
+                else if($element instanceof CFormButtonElement)
+                    return $element->render()."\n";
+                else
+                    return $element->render();
+            }
+            return '';
+        } //end bootstrapLayout
+        else
+            parent::renderElement($element);
+    }
 
     /**
      * Wraps a content with row wrapper
@@ -925,8 +1066,16 @@ class MultiModelRenderForm extends CForm
      */
     protected function getWrappedFieldset($content)
     {
-        return CHtml::tag($this->parentWidget->fieldsetWrapper['tag'],
-            $this->parentWidget->fieldsetWrapper['htmlOptions'], $content);
+        $htmlOptions = $this->parentWidget->fieldsetWrapper['htmlOptions'];
+
+        if($this->isCopyTemplate)
+        {
+            $htmlOptions['id'] = $this->parentWidget->getCopyFieldsetId();
+            if($this->parentWidget->hideCopyTemplate)
+                $htmlOptions['style'] = !empty($htmlOptions['style'])? $htmlOptions['style'] . ' display:none;' : 'display:none;';
+        }
+
+        return CHtml::tag($this->parentWidget->fieldsetWrapper['tag'],$htmlOptions, $content);
     }
 
     /**
@@ -953,7 +1102,8 @@ class MultiModelRenderForm extends CForm
         $cells = '';
 
         foreach ($this->getElements() as $element)
-            if ($element->visible)
+        {
+            if ($element->visible && isset($element->type) && $element->type != 'hidden') //bugfix v3.1
             {
                 $text = empty($element->label) ? '&nbsp;' : $element->label;
                 $options = array();
@@ -966,12 +1116,17 @@ class MultiModelRenderForm extends CForm
 
                 $cells .= CHtml::tag('th', $options, $text);
             }
+        }
 
-        //add an empty column instead of remove link
-        $cells .= CHtml::tag('th', array(), '&nbsp');
+        if(!empty($cells))
+        {
+            //add an empty column instead of remove link
+            $cells .= CHtml::tag('th', array(), '&nbsp');
 
-        $row = $this->getWrappedFieldset($cells);
-        echo CHtml::tag('thead', array(), $cells);
+            $row = $this->getWrappedFieldset($cells);
+            echo CHtml::tag('thead', array(), $cells);
+        }
+
     }
 
 
@@ -994,6 +1149,49 @@ class MultiModelRenderForm extends CForm
     }
 
     /**
+     * Renders the label for this input.
+     * The default implementation returns the result of {@link CHtml activeLabelEx}.
+     * @return string the rendering result
+     */
+    public function renderElementLabel($element,$htmlOptions=array())
+    {
+        $class='';
+
+        $options = array_merge($htmlOptions,array(
+            'label'=>$element->getLabel(),
+            'required'=>$element->getRequired()
+        ));
+
+        if($this->parentWidget->bootstrapLayout)
+        {
+
+            switch($element->type)
+            {
+                case 'checkbox':
+                case 'checkboxlist':
+                    $class='checkbox';
+
+                case 'radio':
+                case 'radiolist':
+                    $class='radio';
+
+                default:
+                    $class='control-label';
+            }
+        }
+
+        if(!empty($class))
+            $options['class']=$class;
+
+        if(!empty($element->attributes['id']))
+        {
+            $options['for'] = $element->attributes['id'];
+        }
+
+        return CHtml::activeLabel($element->getParent()->getModel(), $element->name, $options);
+    }
+
+    /**
      * Renders a single form element
      * Remove the '[]' from the label
      *
@@ -1007,71 +1205,53 @@ class MultiModelRenderForm extends CForm
 
         foreach ($elements as $element)
         {
-            if (isset($element->name))
+            if (isset($element->name)) //element is an attribute of the model
             {
                 $elemName = $element->name;
-                $elemLabel = $element->renderLabel(); //get the correct/nice label before changing name
-                $element->label = ''; //no label on $element->render()
 
-                if ($this->isCopyTemplate) // new fieldset
+                if($this->parentWidget->bootstrapLayout && !$this->parentWidget->tableView)
+                    $element->layout = "{label}<div class=\"controls\">{input}\n{hint}\n{error}</div>";
+
+                $elemLabel=$this->parentWidget->tableView ? '' : $this->renderElementLabel($element);
+                $replaceLabel=array('{label}'=>$elemLabel);
+                $element->label = false; //no label on $element->render()
+                $element->layout = strtr($element->layout,$replaceLabel);
+
+                $doRender = false;
+                if ($this->isCopyTemplate && $element->visible) // new fieldset
                 {
-                    // if ($element->visible)\
-
-                    // {\
-
-                        //v.2.2 support for checkboxlist radiolist
-                        //Array types have to be rendered as array in the CopyTemplate
-                        $element->name = $this->isElementArrayType($element->type) ? $elemName . '[][]' : $elemName . '[]';
-
-                        $elemOutput = ($element->type == 'hidden' || //bugfix: v2.1.1
-                            $this->parentWidget->tableView) ? '' : $elemLabel;
-
-                        $elemOutput .= $element->render();
-                        //bugfix: v2.1 - don't render hidden inputs in table cell
-                        $output .= $element->type == 'hidden' ? $elemOutput : $this->getWrappedRow($elemOutput);
-                    // }\
-
+                    //Array types have to be rendered as array in the CopyTemplate
+                    $element->name = $this->isElementArrayType($element->type) ? $elemName . '[][]' : $elemName . '[]';
+                    $doRender = true;
                 }
                 elseif (!empty($this->primaryKey))
                 { // existing fieldsets update
 
                     $prefix = 'u__';
                     $element->name = '[' . $prefix . '][' . $this->index . ']' . $elemName;
-
-                    if ($element->type == 'hidden')
-                        $output .= $element->render();
-                    else
-                    {
-                        $elemOutput = $this->parentWidget->tableView ? '' : $elemLabel;
-                        $elemOutput .= $element->render();
-                        $output .= $this->getWrappedRow($elemOutput);
-                    }
+                    $doRender = true;
                 }
                 else
                 { //in validation error mode: the new added items before
-                    // if ($element->visible)\
-
-                    // {\
-
+                    if ($element->visible)
+                    {
                         $prefix = 'n__';
                         $element->name = '[' . $prefix . '][' . $this->index . ']' . $elemName;
+                        $doRender = true;
+                    }
+                }
 
-                        if ($element->type == 'hidden')
-                            $output .= $element->render();
-                        else
-                        {
-                            $elemOutput = $this->parentWidget->tableView ? '' : $elemLabel;
-                            $elemOutput .= $element->render();
-                            $output .= $this->getWrappedRow($elemOutput);
-                        }
-                    // }\
-
+                if($doRender)
+                {
+                    $elemOutput = $element->render();
+                    $output .= $element->type == 'hidden' ? $elemOutput : $this->getWrappedRow($elemOutput);
                 }
             }
+            else  //CFormStringElement...
+                $output .= $element->render();
         }
 
-        if (!$this->isCopyTemplate)
-            $output .= $this->parentWidget->getRemoveLink();
+        $output .= $this->parentWidget->getRemoveLink($this->isCopyTemplate);
 
         return $output;
     }
@@ -1094,20 +1274,29 @@ class MultiModelRenderForm extends CForm
     }
 
     /**
-     * Get the add item link
+     * Get the add item link or button
      *
      * @return string
      */
     public function getAddLink()
     {
-        return CHtml::tag('a',
-            array('id' => $this->parentWidget->id,
-                'href' => '#',
-                'rel' => '.' . $this->parentWidget->getCopyClass(),
-                'tabindex' => '-1'
-            ),
-            $this->parentWidget->addItemText
-        );
+        if($this->parentWidget->addItemAsButton)
+        {
+            echo CHtml::htmlButton($this->parentWidget->addItemText,
+                  array('id' => $this->parentWidget->id,
+                        'rel' => '.' . $this->parentWidget->getCopyClass()
+                    ));
+        }
+        else
+        {
+            return CHtml::tag('a',
+                array('id' => $this->parentWidget->id,
+                    'href' => '#',
+                    'rel' => '.' . $this->parentWidget->getCopyClass()
+                ),
+                $this->parentWidget->addItemText
+            );
+        }
     }
 
     /**
@@ -1117,7 +1306,12 @@ class MultiModelRenderForm extends CForm
      */
     public function renderAddLink()
     {
-        return $this->getWrappedRow($this->getAddLink());
+        $tag = $this->parentWidget->rowWrapper['tag'];
+        $htmlOptions = $this->parentWidget->rowWrapper['htmlOptions'];
+
+        $htmlOptions['class'] = !empty($htmlOptions['class']) ? $htmlOptions['class'] .' mmf_additem' : 'mmf_additem';
+
+        return CHtml::tag($tag,$htmlOptions,$this->getAddLink());
     }
 
     /**
