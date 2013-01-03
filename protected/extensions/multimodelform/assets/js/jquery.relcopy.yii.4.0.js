@@ -97,7 +97,7 @@ function clearAllInputs(groupObj)
                 var funcBeforeNewId = function(){eval(settings.beforeNewId);};
                 var funcAfterNewId = function(){eval(settings.afterNewId);};
 
-                var master = $(rel+":first");
+                var master = $(rel+":last");
 
                 if(!master.is(":visible"))
                 {
@@ -145,7 +145,8 @@ function clearAllInputs(groupObj)
 
                 mmfRecordCount++;
 
-                $(parent).find(rel+':last').after(clone);
+                $(parent).find(rel+':last').before(clone);
+                sectionCalc();
                 return false;
 
             }); // end click action

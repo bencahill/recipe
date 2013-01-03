@@ -48,7 +48,7 @@ class Ingredient extends CActiveRecord
 		return array(
 			array('name, recipe_id, section_id', 'required'),
 			array('recipe_id, section_id', 'numerical', 'integerOnly'=>true),
-			array('quantity1, quantity2, quantity3, quantity4, quantity5, section_id', 'safe'),
+			array('quantity1, quantity2, quantity3, quantity4, quantity5, section_id, position', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, quantity1, quantity2, quantity3, quantity4, quantity5, name, recipe_id', 'safe', 'on'=>'search'),

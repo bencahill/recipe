@@ -123,7 +123,9 @@ $ingredientFormConfig = array(
         ),
         'section_id'=>array(
             'type'=>'hidden',
-            'visible'=>false,
+        ),
+        'position'=>array(
+            'type'=>'hidden',
         ),
     ));
 
@@ -131,8 +133,26 @@ $this->widget('ext.multimodelform.MultiModelForm',array(
         'id' => 'id_ingredient', //the unique widget id
         'formConfig' => $ingredientFormConfig, //the form configuration array
 		'model' => $ingredient, //instance of the form model
-		'sortAttribute' => 'position', //if assigned: sortable fieldsets is enabled
+		'sortAttribute' => 1, //if assigned: sortable fieldsets is enabled
 		'tableView' => true,
+		'removeHtmlOptions' => array( 'tabindex'=>-1 ),
+		'hideCopyTemplate' => false,
+		'sortOptions' => array(
+			'placeholder' => 'ui-state-highlight',
+			'opacity' => 0.8,
+			'cursor' => 'move',
+			'items' => '.mmf_row:not(:last)',
+			'start' => 'js:function( event, ui) {
+				$(ui.item).find("textarea").each(function() {
+					$(this).ckeditorGet().destroy();
+				});
+				ui.placeholder.height(ui.item.height());
+			}',
+			'stop' => 'js:function( event, ui) {
+				sectionCalc();
+				$(ui.item).find("textarea").ckeditor({"toolbar":[["Bold","Italic","Underline","Strike","Subscript","Superscript","-","RemoveFormat"],["NumberedList","BulletedList","-","Outdent","Indent","-","SpellChecker","Scayt","-","Format"]],"forcePasteAsPlainText":true,"extraPlugins":"","removeDialogTabs":"","contentsCss":["/assets/e07a29c9/contents.css"],"resize_enabled":true,"resize_dir":"both","autoGrow_onStartup":false,"language":"","baseHref":"","bodyClass":"","bodyId":"","docType":"","filebrowserBrowseUrl":"","filebrowserFlashBrowseUrl":"","filebrowserImageBrowseUrl":"","filebrowserFlashUploadUrl":"","filebrowserUploadUrl":"","filebrowserImageBrowseLinkUrl":"","filebrowserImageUploadUrl":"","fullPage":false,"height":200,"width":"","uiColor":"","disableNativeSpellChecker":false,"autoUpdateElement":true});
+			}',
+		),
  
         //if submitted not empty from the controller,
         //the form will be rendered with validation errors
@@ -209,6 +229,7 @@ $(function() {
 	$('#Recipe_title').bind('input', function() {
 		$('h1 em').text($('#Recipe_title').val());
 	});
+	$('#id_ingredient').attr('tabindex',-1);
 });
 </script>
 

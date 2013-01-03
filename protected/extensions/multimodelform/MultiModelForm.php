@@ -354,8 +354,8 @@ class MultiModelForm extends CWidget
         if (!isset($formData))
             $formData = $_POST;
 
-        $sortAttribute = !empty($formData[self::CLASSPREFIX . 'sortAttribute']) ? $formData[self::CLASSPREFIX . 'sortAttribute'] : null;
-        $sortIndex = 0;
+        // $sortAttribute = !empty($formData[self::CLASSPREFIX . 'sortAttribute']) ? $formData[self::CLASSPREFIX . 'sortAttribute'] : null;
+        // $sortIndex = 0;
 
         if ($doValidate)
         {
@@ -374,11 +374,11 @@ class MultiModelForm extends CWidget
                 }
 
                 //if sortable, assign the sortAttribute
-                if (!empty($sortAttribute))
-                {
-                    $sortIndex++;
-                    $item->$sortAttribute = $sortIndex;
-                }
+                // if (!empty($sortAttribute))
+                // {
+                    // $sortIndex++;
+                    // $item->$sortAttribute = $sortIndex;
+                // }
 
                 if (!$item->save())
                     return false;
@@ -703,7 +703,7 @@ class MultiModelForm extends CWidget
      */
     public function isSortable()
     {
-        return !empty($this->sortAttribute) && !$this->tableView;
+        return !empty($this->sortAttribute); // && !$this->tableView;
     }
 
     /**
@@ -923,7 +923,7 @@ class MultiModelForm extends CWidget
         {
             //render the name of the sortAttribute as hidden input
             //used in MultiModelForm::save
-            echo CHtml::hiddenField(self::CLASSPREFIX . 'sortAttribute', $this->sortAttribute);
+            // echo CHtml::hiddenField(self::CLASSPREFIX . 'sortAttribute', $this->sortAttribute);
 
             if (!$this->tableView)
                 echo CHtml::openTag('div', array('id' => $this->getSortSelectorId()));
