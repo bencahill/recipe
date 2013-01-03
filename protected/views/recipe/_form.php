@@ -232,6 +232,16 @@ $(function() {
 	});
 	$('#id_ingredient').attr('tabindex',-1);
 	$('#Recipe_title').focus();
+	$('.mmf_table input').keydown(function(event, ui) {
+		if(event.which == 13 || event.which == 9) {
+			var $this = $(this);
+			var $inputs = $('input,iframe').filter(':visible');
+			var index = $inputs.index($this);
+			var next = $inputs.get((index+1));
+			$window = $(window);
+			$window.scrollTop($(next).offset().top - ($window.height()/2));
+		}
+	});
 });
 </script>
 
