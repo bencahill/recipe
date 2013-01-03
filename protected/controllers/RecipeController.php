@@ -50,8 +50,12 @@ class RecipeController extends Controller
 	 */
 	public function actionView($id)
 	{
+		$model = $this->loadModel($id);
+
+		$this->pageTitle = Yii::app()->name . ' - ' . $model->title;
+
 		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+			'model'=>$model,
 		));
 	}
 
@@ -130,7 +134,7 @@ class RecipeController extends Controller
 				$this->redirect(array('view','id'=>$model->id));
 		}
 
-		$this->pageTitle = 'Update '.$model->title;
+		$this->pageTitle = Yii::app()->name . ' - Update '.$model->title;
 
 		$this->render('update',array(
 			'model'=>$model,
