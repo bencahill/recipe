@@ -6,9 +6,11 @@
  * The followings are the available columns in table 'tbl_category':
  * @property integer $id
  * @property string $name
+ * @property integer $user_id
  *
  * The followings are the available model relations:
  * @property Recipe[] $recipes
+ * @property User $user
  */
 class Category extends CActiveRecord
 {
@@ -39,9 +41,10 @@ class Category extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('name', 'required'),
+			array('user_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, name', 'safe', 'on'=>'search'),
+			array('id, name, user_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,6 +57,7 @@ class Category extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'recipes' => array(self::HAS_MANY, 'Recipe', 'category_id'),
+			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
 		);
 	}
 
@@ -65,6 +69,7 @@ class Category extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'name' => 'Name',
+			'user_id' => 'User',
 		);
 	}
 
@@ -81,9 +86,42 @@ class Category extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('name',$this->name,true);
+		$criteria->compare('user_id',$this->user_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+
+	public function listAll()
+	{
+		$categories = $this->findAll();
+		$categoryList = array();
+		foreach($categories as $cat) {
+			$categoryList[$cat->id] = $cat->name;
+		}
+
+		return $categoryList;
+	}
+
+	public function defaultScope()
+	{
+		return array(
+			'condition'=>'user_id='.Yii::app()->user->id,
+		);
+	}
+
+	protected function beforeSave()
+	{
+		if(parent::beforeSave())
+		{
+			if($this->isNewRecord)
+			{
+				$this->user_id=Yii::app()->user->id;
+			}
+			return true;
+		}
+		else
+			return false;
 	}
 }

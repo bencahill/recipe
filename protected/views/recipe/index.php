@@ -8,7 +8,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>Recipes</h1>
+<h1><?php echo empty($category) ? 'Recipes' : $category; ?></h1>
 
 <?php $this->widget('bootstrap.widgets.TbListView', array(
 	'id'=>'indexView',

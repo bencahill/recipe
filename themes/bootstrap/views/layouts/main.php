@@ -21,6 +21,7 @@ $menuItems = array();
 if( ! Yii::app()->user->isGuest ) {
 	$menuItems[] = array('label'=>'Recipes', 'url'=>array('/recipe/index'));
     $menuItems[] = array('label'=>'Create Recipe', 'url'=>array('/recipe/create'));
+	$menuItems[] = array('label'=>'Categories', 'url'=>array('/category/index'));
 }
 $menuItems[] = array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest);
 $menuItems[] = array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest);
@@ -34,7 +35,7 @@ $this->widget('bootstrap.widgets.TbNavbar',array(
     ),
 )); ?>
 
-<div class="container" id="page">
+<div class="container <?php echo Yii::app()->controller->id.ucfirst(Yii::app()->controller->action->id); ?>" id="page">
 
 	<?php if(isset($this->breadcrumbs)):?>
 		<?php $this->widget('bootstrap.widgets.TbBreadcrumbs', array(

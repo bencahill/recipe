@@ -1,6 +1,6 @@
 <?php
 
-class RecipeController extends Controller
+class CategoryController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -15,6 +15,7 @@ class RecipeController extends Controller
 	{
 		return array(
 			'accessControl', // perform access control for CRUD operations
+			'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
 
@@ -27,11 +28,11 @@ class RecipeController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('view'),
+				'actions'=>array('index','view'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('index','create','update'),
+				'actions'=>array('create','update'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -61,42 +62,20 @@ class RecipeController extends Controller
 	 */
 	public function actionCreate()
 	{
-		Yii::import('ext.multimodelform.MultiModelForm');
-
-		$model=new Recipe;
+		$model=new Category;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		$ingredient = new Ingredient;
-		$validatedIngredients = array(); //ensure an empty array
-
-		if(isset($_POST['Recipe']))
+		if(isset($_POST['Category']))
 		{
-			$model->attributes=$_POST['Recipe'];
-
-			//build a 'dummy' $masterValues for validation only so that recipe_id is not blank
-			$masterValues = array('recipe_id' => 1);
-
-			if( //validate detail before saving the master
-			MultiModelForm::validate($ingredient,$validatedIngredients,$deleteItems,$masterValues) &&
-			$model->save()
-			)
-			{
-				//the value for the foreign key 'recipe_id'
-				$masterValues = array ('recipe_id'=>$model->id);
-				if (MultiModelForm::save($ingredient,$validatedIngredients,$deleteIngredients,$masterValues))
-					$this->redirect(array('view','id'=>$model->id));
-			}
+			$model->attributes=$_POST['Category'];
+			if($model->save())
+				$this->redirect(array('view','id'=>$model->id));
 		}
-
-		$model->number_instructions = 1;
 
 		$this->render('create',array(
 			'model'=>$model,
-			//submit the ingredient and validatedItems to the widget in the edit form
-			'ingredient'=>$ingredient,
-			'validatedIngredients' => $validatedIngredients,
 		));
 	}
 
@@ -107,36 +86,20 @@ class RecipeController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
-		Yii::import('ext.multimodelform.MultiModelForm');
-
 		$model=$this->loadModel($id);
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		$ingredient = new Ingredient;
-		$validatedIngredients = array(); //ensure an empty array
-
-		if(isset($_POST['Recipe']))
+		if(isset($_POST['Category']))
 		{
-			$model->attributes=$_POST['Recipe'];
-			//the value for the foreign key 'recipe_id'
-			$masterValues = array ('recipe_id'=>$model->id);
-
-			if( //Save the master model after saving valid ingredients
-			MultiModelForm::save($ingredient,$validatedIngredients,$deleteIngredients,$masterValues) &&
-			$model->save()
-			)
+			$model->attributes=$_POST['Category'];
+			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
 
-		$this->pageTitle = 'Update '.$model->title;
-
 		$this->render('update',array(
 			'model'=>$model,
-			//submit the ingredient and validatedItems to the widget in the edit form
-			'ingredient'=>$ingredient,
-			'validatedIngredients' => $validatedIngredients,
 		));
 	}
 
@@ -147,17 +110,11 @@ class RecipeController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		if(Yii::app()->request->isPostRequest)
-		{
-			// we only allow deletion via POST request
-			$this->loadModel($id)->delete();
+		$this->loadModel($id)->delete();
 
-			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-			if(!isset($_GET['ajax']))
-				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-		}
-		else
-			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
+		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+		if(!isset($_GET['ajax']))
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
 
 	/**
@@ -165,22 +122,9 @@ class RecipeController extends Controller
 	 */
 	public function actionIndex()
 	{
-		if( isset($_GET['category']) ) {
-			$criteria = array('condition'=>'category_id='.$_GET['category']);
-			$category = Category::model()->findByPk($_GET['category'])->name;
-			$this->pageTitle = Yii::app()->name . ' - ' . $category;
-		} else {
-			$criteria = array();
-			$category = '';
-			$this->pageTitle = Yii::app()->name . ' - Recipes';
-		}
-
-		$dataProvider=new CActiveDataProvider('Recipe', array(
-			'criteria'=>$criteria,
-		));
+		$dataProvider=new CActiveDataProvider('Category');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
-			'category'=>$category,
 		));
 	}
 
@@ -189,10 +133,10 @@ class RecipeController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Recipe('search');
+		$model=new Category('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Recipe']))
-			$model->attributes=$_GET['Recipe'];
+		if(isset($_GET['Category']))
+			$model->attributes=$_GET['Category'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -202,11 +146,13 @@ class RecipeController extends Controller
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer the ID of the model to be loaded
+	 * @param integer $id the ID of the model to be loaded
+	 * @return Category the loaded model
+	 * @throws CHttpException
 	 */
 	public function loadModel($id)
 	{
-		$model=Recipe::model()->findByPk($id);
+		$model=Category::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -214,11 +160,11 @@ class RecipeController extends Controller
 
 	/**
 	 * Performs the AJAX validation.
-	 * @param CModel the model to be validated
+	 * @param Category $model the model to be validated
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='recipe-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='category-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();

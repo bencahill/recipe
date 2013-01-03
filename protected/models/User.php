@@ -58,6 +58,7 @@ class User extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'recipes' => array(self::HAS_MANY, 'Recipe', 'author_id'),
+			'categories' => array(self::HAS_MANY, 'Category', 'user_id'),
 		);
 	}
 

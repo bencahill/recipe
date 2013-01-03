@@ -17,6 +17,13 @@
                 'htmlOptions'=>array('class'=>'operations'),
             ));
             $this->endWidget();
+			if( Yii::app()->controller->id == 'recipe' && Yii::app()->controller->action->id == 'index' ) {
+				$this->beginWidget('zii.widgets.CPortlet', array(
+					'title'=>'Category',
+				));
+				echo CHtml::dropDownList('category',isset($_GET['category']) ? $_GET['category'] : '',array(''=>'View All') + Category::model()->listAll(), array('onchange'=>'window.location = "'.$this->createUrl('index').'"+($(this).val()?"category/":"")+$(this).val()'));
+				$this->endWidget();
+			}
         ?>
         </div><!-- sidebar -->
     </div>

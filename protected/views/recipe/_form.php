@@ -251,7 +251,7 @@ $this->widget('ext.editMe.widgets.ExtEditMe', array(
 
 	<?php echo $form->checkBoxRow($model,'number_instructions',array('value'=>1,'uncheckValue'=>0)); ?>
 	<?php echo $form->textFieldRow($model,'source'); ?>
-	<?php echo $form->textFieldRow($model,'category_id'); ?>
+	<?php echo $form->dropDownListRow($model,'category_id',Category::model()->listAll()); ?>
 
 </fieldset>
  

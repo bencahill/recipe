@@ -48,6 +48,11 @@ td.mmf_cell{ padding:0px; }
 #yw1 th, #yw1 td{ border-top:none; }
 #ingredientView td p:last-child{ margin-bottom:0; }
 #ingredientView tbody td{ padding-left:16px; text-indent:-10px; }
-h1 a{ color:black; }
+h1 a{ color:black; float:left; }
 h1 a:hover{ text-decoration:none; }
 #Recipe_description{ width:auto }
+.recipeView .category{ float:right; line-height:12px; padding-top:28px; margin:10px 0; }
+.category{ font-size:12px; font-style:italic; font-weight:normal; }
+.category a{ color:black; }
+.recipeView h1{ display:inline-block; }
+.categoryIndex .view{ margin-bottom:15px; }
