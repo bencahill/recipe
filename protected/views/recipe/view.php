@@ -7,11 +7,13 @@ $breadcrumbs[] = $model->title;
 
 $this->breadcrumbs=$breadcrumbs;
 
-$this->menu=array(
-	array('label'=>'Update Recipe', 'url'=>array('update', 'id'=>$model->id)),
-	array('label'=>'Delete Recipe', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage Recipes', 'url'=>array('admin')),
-);
+if( ! Yii::app()->user->isGuest ) {
+	$this->menu=array(
+		array('label'=>'Update Recipe', 'url'=>array('update', 'id'=>$model->id)),
+		array('label'=>'Delete Recipe', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
+		array('label'=>'Manage Recipes', 'url'=>array('admin')),
+	);
+}
 ?>
 
 <h1><?php echo CHtml::link(CHtml::encode($model->title), array('view', 'id'=>$model->id)); ?></h1>
