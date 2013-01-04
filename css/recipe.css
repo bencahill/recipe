@@ -44,7 +44,7 @@ td.mmf_cell{ padding:0px; }
 #ingredientView tbody{ border-top:2px solid black; }
 #ingredientView th, #ingredientView tbody td{ border-right:1px solid lightgrey; }
 #ingredientView th:first-child, #ingredientView tbody td:first-child{ border-right:2px solid black; }
-#ingredientView th:last-child, #ingredientView tbody td.merge{ border-right:none; }
+#ingredientView th:last-child, #ingredientView td.extrarow:last-child, #ingredientView tbody td.merge{ border-right:none; }
 #yw1 th, #yw1 td{ border-top:none; }
 #ingredientView td p:last-child{ margin-bottom:0; }
 #ingredientView tbody td{ padding-left:16px; text-indent:-10px; }
