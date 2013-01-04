@@ -39,22 +39,30 @@ else {
 	$sections = $model->sections;
 }
 
+$formatFractions = function( $quantity ) {
+	return preg_replace( '/(\d)\/(\d)/', '<sup>\1</sup>&frasl;<sub>\2</sub>', $quantity );
+};
+
 $yields = '<table style="display:none"><tr class="yields"><td></td><td><p>Yield</p>'.nl2br($model->yield1).'</td>';
 $yieldIngredients = array( array('name'=>'Name', 'value'=>'$data["name"]'),
-	array('name'=>'Quantity', 'value'=>'$data["quantity1"]'),
+	array('name'=>'Quantity', 'type'=>'raw', 'value'=>function($data) use ($formatFractions) {
+		return $formatFractions($data["quantity1"]);
+	}),
 );
 for( $i = 2; $i <= 5; $i++ ) {
 	if( !empty( $model->{'yield'.$i} ) ) {
 		$yields .= "<td><p>Yield</p>".nl2br($model->{'yield'.$i})."</td>";
-		$yieldIngredients[] = array('name'=>'Quantity', 'value'=>'$data["quantity'.$i.'"]');
+		$yieldIngredients[] = array('name'=>'Quantity', 'type'=>'raw', 'value'=>function($data) use ($formatFractions, $i) {
+			return $formatFractions($data["quantity'.$i.'"]);
+		});
 	}
 }
 $yields .= '<td></td></tr></table>';
 $yieldIngredients[] = array(
 	'name'=>'Instructions',
 	'type'=>'raw',
-	'value'=>function($data) use ($sections) {
-		return $sections[$data["section_id"]];
+	'value'=>function($data) use ($sections, $formatFractions) {
+		return $formatFractions( $sections[$data["section_id"]] );
 	}
 );
 
@@ -125,7 +133,11 @@ $this->widget('ext.groupgridview.BootGroupGridView', array(
 
 $bottomList = array();
 if( !empty($model->notes) ) {
-	$bottomList[] = 'notes:html';
+	$bottomList[] = array(
+		'name'=>'Notes',
+		'type'=>'raw',
+		'value'=>$formatFractions( $model->notes )
+	);
 }
 if( !empty($model->source) ) {
 	$bottomList[] = 'source';
