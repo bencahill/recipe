@@ -37,4 +37,9 @@ function updateColumns() {
 		$this.find('td:last').css('width',((6-columns)*12)+'%');
 	});
 	$(".mmf_table.yields").width($('.mmf_table:not(.yields) thead').width());
+	if( columns <= 3 ) {
+		$('.mmf_table th:nth-child(2), .mmf_table td:nth-child(2), .mmf_table th:nth-child(3), .mmf_table td:nth-child(3), .mmf_table th:nth-child(4), .mmf_table td:nth-child(4), .mmf_table th:nth-child(5), .mmf_table td:nth-child(5), .mmf_table th:nth-child(6), .mmf_table td:nth-child(6)').width((columns == 3 ? 15 : 20) + '%');
+	} else {
+		$('.mmf_table th:nth-child(2), .mmf_table td:nth-child(2), .mmf_table th:nth-child(3), .mmf_table td:nth-child(3), .mmf_table th:nth-child(4), .mmf_table td:nth-child(4), .mmf_table th:nth-child(5), .mmf_table td:nth-child(5), .mmf_table th:nth-child(6), .mmf_table td:nth-child(6)').width('10%');
+	}
 }
