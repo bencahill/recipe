@@ -56,3 +56,6 @@ h1 a:hover{ text-decoration:none; }
 .category a{ color:black; }
 .recipeView h1{ display:inline-block; }
 .categoryIndex .view{ margin-bottom:15px; }
+
+.cke_skin_kama{ margin-bottom:10px; }
+#cke_Recipe_notes{ width:65%; }

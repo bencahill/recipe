@@ -129,6 +129,9 @@ $ingredientFormConfig = array(
         ),
     ));
 
+$ckeCss = Yii::app()->assetManager->getPublishedUrl( Yii::getPathOfAlias('ext.editMe.vendors.CKEditor') ) . '/contents.css';
+$ckeOptions = '{"toolbar":[["Bold","Italic","Underline","Strike","Subscript","Superscript","-","RemoveFormat"],["NumberedList","BulletedList","-","Outdent","Indent","-","SpellChecker","Scayt","-","Format"]],"forcePasteAsPlainText":true,"extraPlugins":"","removeDialogTabs":"","contentsCss":["' . $ckeCss . '"],"resize_enabled":true,"resize_dir":"both","autoGrow_onStartup":false,"language":"","baseHref":"","bodyClass":"","bodyId":"","docType":"","filebrowserBrowseUrl":"","filebrowserFlashBrowseUrl":"","filebrowserImageBrowseUrl":"","filebrowserFlashUploadUrl":"","filebrowserUploadUrl":"","filebrowserImageBrowseLinkUrl":"","filebrowserImageUploadUrl":"","fullPage":false,"height":200,"width":"","uiColor":"","disableNativeSpellChecker":false,"autoUpdateElement":true}';
+
 $this->widget('ext.multimodelform.MultiModelForm',array(
         'id' => 'id_ingredient', //the unique widget id
         'formConfig' => $ingredientFormConfig, //the form configuration array
@@ -150,7 +153,7 @@ $this->widget('ext.multimodelform.MultiModelForm',array(
 			}',
 			'stop' => 'js:function( event, ui) {
 				sectionCalc();
-				$(ui.item).find("textarea").ckeditor({"toolbar":[["Bold","Italic","Underline","Strike","Subscript","Superscript","-","RemoveFormat"],["NumberedList","BulletedList","-","Outdent","Indent","-","SpellChecker","Scayt","-","Format"]],"forcePasteAsPlainText":true,"extraPlugins":"","removeDialogTabs":"","contentsCss":["/assets/e07a29c9/contents.css"],"resize_enabled":true,"resize_dir":"both","autoGrow_onStartup":false,"language":"","baseHref":"","bodyClass":"","bodyId":"","docType":"","filebrowserBrowseUrl":"","filebrowserFlashBrowseUrl":"","filebrowserImageBrowseUrl":"","filebrowserFlashUploadUrl":"","filebrowserUploadUrl":"","filebrowserImageBrowseLinkUrl":"","filebrowserImageUploadUrl":"","fullPage":false,"height":200,"width":"","uiColor":"","disableNativeSpellChecker":false,"autoUpdateElement":true});
+				$(ui.item).find("textarea").ckeditor(' . $ckeOptions . ');
 			}',
 		),
  
@@ -181,8 +184,8 @@ $(function() {
 		var id = ($('.section').length + 1);
 		$('.section textarea').last().ckeditorGet().destroy();
 		$('.mmf_row:not(.section)').last().before($('.section').last());
-		$('.mmf_row:not(.section)').last().after('<tr class="mmf_row section"> <td class="mmf_cell" colspan="2"> <label for="Recipe_section'+id+'"> Instructions </label> <textarea name="Recipe[sections][]" id="Recipe_section'+id+'"></textarea> </td> <td class="mmf_cell"></td> </tr>');
-		$('#Recipe_section'+id).add($('.section textarea').get(-2)).ckeditor({'toolbar':[['Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat'],['NumberedList','BulletedList','-','Outdent','Indent','-','SpellChecker','Scayt', '-', 'Format']],'forcePasteAsPlainText':true,'extraPlugins':'','removeDialogTabs':'','contentsCss':['/assets/e07a29c9/contents.css'],'resize_enabled':true,'resize_dir':'both','autoGrow_onStartup':false,'language':'','baseHref':'','bodyClass':'','bodyId':'','docType':'','filebrowserBrowseUrl':'','filebrowserFlashBrowseUrl':'','filebrowserImageBrowseUrl':'','filebrowserFlashUploadUrl':'','filebrowserUploadUrl':'','filebrowserImageBrowseLinkUrl':'','filebrowserImageUploadUrl':'','fullPage':false,'height':200,'width':'','uiColor':'','disableNativeSpellChecker':false,'autoUpdateElement':true});
+		$('.mmf_row:not(.section)').last().after('<tr class="mmf_row section"> <td class="mmf_cell" colspan="6"> <label for="Recipe_section'+id+'"> Instructions </label> <textarea name="Recipe[sections][]" id="Recipe_section'+id+'"></textarea> </td> <td class="mmf_cell"></td> </tr>');
+		$('#Recipe_section'+id).add($('.section textarea').get(-2)).ckeditor(<?php echo $ckeOptions; ?>);
 		addRemoveLink( $('.section').get(-2) );
 		$('.mmf_row:not(.section)').last().find('input[id*=name]').focus();
 		return false;
