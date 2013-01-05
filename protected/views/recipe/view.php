@@ -53,7 +53,7 @@ for( $i = 2; $i <= 5; $i++ ) {
 	if( !empty( $model->{'yield'.$i} ) ) {
 		$yields .= "<td><p>Yield</p>".nl2br($model->{'yield'.$i})."</td>";
 		$yieldIngredients[] = array('name'=>'Quantity', 'type'=>'raw', 'value'=>function($data) use ($formatFractions, $i) {
-			return $formatFractions($data["quantity'.$i.'"]);
+			return $formatFractions($data["quantity$i"]);
 		});
 	}
 }
