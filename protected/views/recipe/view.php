@@ -44,7 +44,7 @@ $formatFractions = function( $quantity ) {
 };
 
 $yields = '<table style="display:none"><tr class="yields"><td></td><td><p>Yield</p>'.nl2br($model->yield1).'</td>';
-$yieldIngredients = array( array('name'=>'Name', 'value'=>'$data["name"]'),
+$yieldIngredients = array( array('name'=>'Ingredients', 'value'=>'$data["name"]'),
 	array('name'=>'Quantity', 'type'=>'raw', 'value'=>function($data) use ($formatFractions) {
 		return $formatFractions($data["quantity1"]);
 	}),
