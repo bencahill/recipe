@@ -4,7 +4,7 @@ td.mmf_cell{ padding:0px; }
 .mmf_table thead td label{ font-weight:normal !important; }
 .mmf_table th:first-child, .mmf_table td:first-child{ width:16%; }
 .mmf_table th:last-child{ background:transparent; }
-.mmf_table.yields{ background:white; z-index:10; margin:0; padding-top:10px; border-bottom:1px solid lightgrey; }
+.mmf_table.yields{ background:white; z-index:10; margin:0; padding-top:10px; border-bottom:1px solid black; }
 .mmf_table input, .mmf_table textarea{ width:auto; }
 .mmf_table td{ padding:0 18px 0 6px; }
 .mmf_table td textarea, .mmf_table td input{ width:100%; }
@@ -35,14 +35,14 @@ td.mmf_cell{ padding:0px; }
 #ingredientView th:last-child, #ingredientView td:last-child{ width:auto !important; }
 #ingredientView tbody tr:first-child{ display:none; }
 #ingredientView thead td p{ font-size:.75em; margin:0; }
-#ingredientView td.extrarow{ text-indent:-9999px; border-bottom:1px solid #CCC; line-height:0 !important; }
+#ingredientView td.extrarow{ text-indent:-9999px; border-bottom:1px solid black; line-height:0 !important; }
 
 #indexView h4{ margin:25px 0 0; line-height:16px; }
 #indexView h4 a{ color:black; }
 
 #ingredientView td h5{ margin:0; }
 #ingredientView tbody{ border-top:2px solid black; }
-#ingredientView th, #ingredientView tbody td{ border-right:1px solid lightgrey; }
+#ingredientView th, #ingredientView tbody td{ border-right:1px solid black; }
 #ingredientView th:first-child, #ingredientView tbody td:first-child{ border-right:2px solid black; }
 #ingredientView th:last-child, #ingredientView td.extrarow:last-child, #ingredientView tbody td.merge{ border-right:none; }
 #yw1 th, #yw1 td{ border-top:none; }
@@ -59,3 +59,6 @@ h1 a:hover{ text-decoration:none; }
 
 .cke_skin_kama{ margin-bottom:10px; }
 #cke_Recipe_notes{ width:65%; }
+
+.recipeView .detail-view th, .recipeView .detail-view td{ border-top:1px solid black; }
+#ingredientView th{ border-top:1px solid black; background:lightgrey !important; -webkit-print-color-adjust:exact; }
