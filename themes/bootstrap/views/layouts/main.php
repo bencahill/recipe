@@ -21,6 +21,7 @@ $menuItems = array();
 if( ! Yii::app()->user->isGuest ) {
 	$menuItems[] = array('label'=>'Recipes', 'url'=>array('/recipe/index'));
     $menuItems[] = array('label'=>'Create Recipe', 'url'=>array('/recipe/create'));
+    $menuItems[] = array('label'=>'Compare Recipes', 'url'=>array('/recipe/compare'));
 	$menuItems[] = array('label'=>'Categories', 'url'=>array('/category/index'));
 }
 $menuItems[] = array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest);

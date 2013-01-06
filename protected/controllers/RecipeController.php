@@ -31,7 +31,7 @@ class RecipeController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('index','create','update'),
+				'actions'=>array('index','compare','create','update'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -56,6 +56,14 @@ class RecipeController extends Controller
 
 		$this->render('view',array(
 			'model'=>$model,
+		));
+	}
+
+	public function actionCompare($id1 = -1,$id2 = -1)
+	{
+		$this->render('compare',array(
+			'id1'=>$id1,
+			'id2'=>$id2,
 		));
 	}
 

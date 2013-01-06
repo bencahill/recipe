@@ -49,6 +49,8 @@ return array(
 				'create'=>'recipe/create',
 				'update/<id:\d+>'=>'recipe/update',
 				'category/view/<id:\d+>'=>'category/view',
+				'compare'=>'recipe/compare',
+				'compare/<id1:\d+>,<id2:\d+>'=>'recipe/compare',
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
