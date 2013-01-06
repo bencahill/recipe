@@ -18,11 +18,17 @@
             ));
             $this->endWidget();
 			if( Yii::app()->controller->id == 'recipe' && Yii::app()->controller->action->id == 'index' ) {
-				$this->beginWidget('zii.widgets.CPortlet', array(
-					'title'=>'Category',
+				$links = array();
+				foreach( Category::model()->listAll() as $id => $name ) {
+					$links[] = array( 'label'=>$name, 'url'=>$this->createUrl('recipe/index',array('category'=>$id)) );
+				}
+				$links[] = '---';
+				$links[] = array('label'=>'View All', 'url'=>$this->createUrl('recipe/index'));
+				$this->widget('bootstrap.widgets.TbButtonGroup', array(
+					'buttons'=>array(
+						array('label'=>'Filter by Category', 'items'=>$links),
+					),
 				));
-				echo CHtml::dropDownList('category',isset($_GET['category']) ? $_GET['category'] : '',array(''=>'View All') + Category::model()->listAll(), array('onchange'=>'window.location = "'.$this->createUrl('index').'"+($(this).val()?"category/":"")+$(this).val()'));
-				$this->endWidget();
 			}
         ?>
         </div><!-- sidebar -->
