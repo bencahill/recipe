@@ -17,7 +17,9 @@ if( ! Yii::app()->user->isGuest ) {
 ?>
 
 <h1><?php echo CHtml::link(CHtml::encode($model->title), array('view', 'id'=>$model->id)); ?></h1>
+<?php if( ! Yii::app()->user->isGuest ) { ?>
 <span class="category"><?php echo CHtml::link(CHtml::encode($model->category->name), array('index', 'category'=>$model->category_id)); ?></span>
+<?php } ?>
 
 <?php
 $sections = array();
