@@ -13,7 +13,7 @@ class SearchWidget extends CPortlet
 			'action'=>'search',
 		));
 
-		echo $form->textFieldRow($model, 'title', array('class'=>'input-medium', 'prepend'=>'<i class="icon-search"></i>', 'id'=>'q', 'name'=>'q'));
+		echo $form->textFieldRow($model, 'title', array('class'=>'input-medium', 'prepend'=>'<i class="icon-search"></i>', 'id'=>'q', 'name'=>'q', 'value'=>($_GET['q']?$_GET['q']:'')));
 		$this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'label'=>'Search'));
 
 		$this->endWidget();
