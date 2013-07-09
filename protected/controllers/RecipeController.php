@@ -177,6 +177,11 @@ class RecipeController extends Controller
 			$criteria = array('condition'=>'category_id='.$_GET['category']);
 			$category = Category::model()->findByPk($_GET['category'])->name;
 			$this->pageTitle = Yii::app()->name . ' - ' . $category;
+		} elseif( isset($_GET['q']) ) {
+			$criteria = new CDbCriteria();
+			$criteria->compare('title', $_GET['q'], true, 'OR');
+			$criteria->compare('description', $_GET['q'], true, 'OR');
+			$this->pageTitle = Yii::app()->name . ' - ' . $_GET['q'] . ' recipes';
 		} else {
 			$criteria = array();
 			$category = '';

@@ -44,6 +44,7 @@ return array(
             'caseSensitive'=>false,
 			'rules'=>array(
 				'category/<category:\d+>'=>'recipe/index',
+				'search'=>'recipe/index',
 				''=>'recipe/index',
 				'<id:\d+>'=>'recipe/view',
 				'create'=>'recipe/create',

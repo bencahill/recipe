@@ -28,7 +28,9 @@
 					'buttons'=>array(
 						array('label'=>'Filter by Category', 'items'=>$links),
 					),
+					'htmlOptions'=>array('style'=>'margin-bottom:20px'),
 				));
+				$this->widget('SearchWidget');
 			}
         ?>
         </div><!-- sidebar -->
